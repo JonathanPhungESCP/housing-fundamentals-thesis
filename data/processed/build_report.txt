@@ -1,37 +1,37 @@
-build started 2026-11-20T10:58:31Z
+build started 2026-11-20T11:09:33Z
 Python 3.13.18
 OK    ingest_fx (0s)
-OK    ingest_rates (1s)
-OK    ingest_paris (1s)
+OK    ingest_rates (0s)
+OK    ingest_paris (2s)
 OK    ingest_singapore (0s)
 OK    ingest_onemap (0s)
 OK    ingest_official (1s)
-OK    ingest_volumes (6s)
+OK    ingest_volumes (9s)
 OK    ingest_dvfplus (0s)
-OK    ingest_hongkong (15s)
+OK    ingest_hongkong (14s)
 URA access key provided to the build: yes
-OK    ingest_ura (92s)
-OK    ingest_ura_geocode (117s)
-OK    ingest_ura_dev (118s)
-OK    clean_paris (5s)
-OK    clean_singapore (4s)
-OK    clean_private (5s)
-OK    features_paris (14s)
-OK    features_singapore (1s)
+OK    ingest_ura (86s)
+OK    ingest_ura_geocode (106s)
+OK    ingest_ura_dev (110s)
+OK    clean_paris (7s)
+OK    clean_singapore (7s)
+OK    clean_private (7s)
+OK    features_paris (19s)
+OK    features_singapore (2s)
 OK    features_private (2s)
-OK    levels (11s)
-OK    robust (41s)
-OK    indices (6s)
-OK    verdict (6s)
+OK    levels (25s)
+OK    robust (68s)
+OK    indices (8s)
+OK    verdict (9s)
 OK    cross_checks (9s)
-OK    early_warning (1s)
+OK    early_warning (2s)
 OK    volumes (0s)
-OK    value_effect (2s)
-OK    district_cycles (9s)
-OK    dynamic_pv (3s)
+OK    value_effect (4s)
+OK    district_cycles (12s)
+OK    dynamic_pv (6s)
 OK    hcmc_checks (0s)
 OK    hcmc_context (0s)
-OK    tests (4s)
+OK    tests (6s)
 --- probe: files of DVF+ open-data on data.gouv.fr
 licence: lov2 | temporal: {'end': '2025-12-31', 'start': '2014-01-01'}
   Documentation DVF+ | html | None | https://datafoncier.cerema.fr/donnees/autres-donnees-foncieres/dvfplus-open-data
@@ -295,4 +295,4 @@ quarter,property_type,locality,index,_id
      91 Landed
     364 Non-Landed
       1 property_type
-build finished 2026-11-20T11:06:26Z
+build finished 2026-11-20T11:18:14Z
