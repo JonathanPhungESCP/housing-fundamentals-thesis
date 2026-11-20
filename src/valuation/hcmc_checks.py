@@ -56,6 +56,10 @@ INPUTS = {
     "down": (0.30, "ratio", "source", "Down payment: loans commonly cover 50-70% of the value",
              "Viet Nam News via The Star, 3 March 2026",
              "https://www.thestar.com.my/business/business-news/2026/03/03/rising-mortgage-rates-test-property-market"),
+    "deposit_state": (0.055, "ratio", "source", "Highest posted deposit rate for individuals at the four state-owned banks, early November 2026",
+                      "Vietbao, 3 November 2026", "https://vietbao.vn/index%2Ephp/print-614379.html"),
+    "deposit_online": (0.07, "ratio", "source", "Upper end of 12-month online deposit rates at many banks (6.1-7%), 17 November 2026",
+                       "Vietbao, 17 November 2026", "https://vietbao.vn/index%2Ephp/print-616112.html"),
     "tau_delta": (0.014, "ratio", "assumption", "Taxes and upkeep as a share of value: the Paris figure reused, no Vietnamese source read", "", ""),
     "area": (60.0, "m2", "assumption", "Size of the flat priced: two bedrooms, no source on the median size sold", "", ""),
     "share": (0.35, "ratio", "assumption", "Share of income paid to the lender: the French convention; Vietnam sets no cap in the sources read", "", ""),
@@ -72,12 +76,32 @@ def check1(yield_: float, rf: float, tau_delta: float, ceiling: float) -> dict:
             "income_growth": ceiling, "check1": read_check1(g["lo"], g["hi"], ceiling)}
 
 
+DISCOUNT = [("10-year government bond", "rf", "the convention used for Paris and Singapore"),
+            ("bank deposit, state-owned banks", "deposit_state", "what a cash buyer's savings earn at the safest banks"),
+            ("bank deposit, online offers", "deposit_online", "what a cash buyer's savings earn at the better offers"),
+            ("mortgage, state-owned banks", "rate_low", "the cost of money for a buyer who borrows"),
+            ("mortgage, other banks", "rate_base", "the cost of money for a buyer who borrows")]
+
+
+def check1_by_rate() -> pd.DataFrame:
+    """Check 1 under each candidate discount rate. In Paris the government yield and the mortgage
+    rate are within half a point of each other, so the choice does not matter; here they are
+    five to ten points apart and the reading changes with it."""
+    rows = []
+    for label, key, why in DISCOUNT:
+        c = check1(V["gross_yield"], V[key], V["tau_delta"], V["income_growth"])
+        rows.append({"discount_rate_is": label, "rate": V[key], "why": why, "g_star_gamma1": c["g_star_gamma1"],
+                     "g_star_gamma4": c["g_star_gamma4"], "income_growth": c["income_growth"], "check1": c["check1"]})
+    return pd.DataFrame(rows)
+
+
 def capacity_ratio(price_m2: float, area: float, income_month: float, rate: float, share: float, years: int, down: float) -> float:
     return price_m2 * area * (1 - down) / (share * income_month * annuity(rate, years))
 
 
 def run() -> pd.DataFrame:
     income = V["income_per_head"] * V["household_size"]
+    rate_dependent = check1_by_rate()["check1"].nunique() > 1
     rows = []
     for (pname, price), (yname, y) in itertools.product(
             (("secondary", V["price_secondary"]), ("primary", V["price_primary"])),
@@ -89,9 +113,12 @@ def run() -> pd.DataFrame:
             rows.append({"price_basis": pname, "price_m2_vnd": price, "yield_case": yname, **c1, "lending_case": sname,
                          "household_income_month_vnd": income, "price_to_income_years": price * V["area"] / (12 * income),
                          "price_over_capacity_rate10": r[0], "price_over_capacity_rate12": r[1], "price_over_capacity_rate14": r[2],
-                         "check2": c2, "reading": combine(c1["check1"], c2)})
+                         "check1_government_yield": c1["check1"],
+                         "check2": c2, "reading": (f"income side: {c2}; rent side: depends on the discount rate" if rate_dependent
+                                                   else combine(c1["check1"], c2))})
     out = pd.DataFrame(rows)
     out.round(4).to_csv(PROCESSED / "hcmc_checks.csv", index=False)
+    check1_by_rate().round(4).to_csv(PROCESSED / "hcmc_check1_rates.csv", index=False)
     pd.DataFrame([{"input": k, "value": v[0], "unit": v[1], "kind": v[2], "description": v[3], "source": v[4], "url": v[5],
                    "read_on": READ if v[2] == "source" else ""} for k, v in INPUTS.items()]).to_csv(PROCESSED / "hcmc_inputs.csv", index=False)
     return out
@@ -100,5 +127,6 @@ def run() -> pd.DataFrame:
 if __name__ == "__main__":
     pd.set_option("display.width", 250, "display.max_columns", 30)
     o = run()
+    print(check1_by_rate().round(3).to_string(index=False))
     print(o[["price_basis", "yield_case", "g_star_gamma1", "g_star_gamma4", "check1", "lending_case", "price_to_income_years",
-             "price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14", "check2", "reading"]].round(3).to_string(index=False))
+             "price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14", "check2", "reading"]].round(3).head(4).to_string(index=False))

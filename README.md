@@ -17,7 +17,7 @@ constrained expense, a second pillar tracks **market tension and liquidity** (tu
 versus price, unsold supply, rent-to-income): a market can look "justified" by rents while it is
 stuck, with volumes falling far faster than prices.
 
-- [Website (GitHub Pages)](https://jojolap1.github.io/housing-fundamentals-thesis/paris.html): maps by street-scale hexagon, district and neighbourhood; a
+- [Website (GitHub Pages)](https://jonathanphungescp.github.io/housing-fundamentals-thesis/paris.html): maps by street-scale hexagon, district and neighbourhood; a
   fundamental-vs-market chart with a sensitivity band; a street table.
 - Kaggle (planned): the processed, aggregated dataset and a notebook that reproduces the main tables
   and maps (`notebooks/reproduce_main_results.ipynb`).

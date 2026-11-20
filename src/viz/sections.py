@@ -488,28 +488,32 @@ def hcmc_section() -> str:
     inputs = "".join(
         f"<tr><td>{r.description}</td><td class='num'>{fmt(r)}</td>"
         f"<td>{f'<a href={chr(34)}{r.url}{chr(34)}>{r.source}</a>' if r.url else '<i>assumption</i>'}</td></tr>" for r in i.itertuples())
-    breakeven = v["income_growth"] + v["gross_yield"] - v["tau_delta"] - 0.01
+    rr = pd.read_csv(PROCESSED / "hcmc_check1_rates.csv")
+    word = {"plausible": "under in every case", "implausible": "above in every case", "depends on the premium": "depends on the risk premium"}
+    rate_rows = "".join(f"<tr><td>{r.discount_rate_is}<br><span class='ev-k' style='color:var(--muted);font-size:0.8rem'>{r.why}</span></td>"
+                        f"<td class='num'>{100 * r.rate:.1f}%</td><td class='num'>{100 * r.g_star_gamma1:.1f}% to {100 * r.g_star_gamma4:.1f}%</td>"
+                        f"<td>{word[r.check1]}</td></tr>" for r in rr.itertuples())
     return f"""
 <h2>Two cross-checks from published averages</h2>
 <div class="card">
   <p>The tests run on sales for Paris and Singapore need a register of transactions, which Vietnam does not publish.
   The two cross-checks can still be computed from city-wide averages read in brokers' and official publications.
   They use asking prices and averages, not medians of sales, and several assumptions; read them as orders of magnitude.</p>
-  <div class="grid-2">
-    <div><b>Rent side: plausible.</b> At a gross yield of {100 * v["gross_yield"]:.1f}% and a 10-year government yield of
-    {100 * v["rf"]:.1f}%, today's prices need rents to grow by {100 * g[0]:.1f}% to {100 * g[1]:.1f}% a year (yield one point
-    lower or higher, risk premium 1% to 4%). Incomes per person in the city grew by about {100 * v["income_growth"]:.1f}% a year
-    between 2010 and 2022, so every case is under the ceiling.</div>
-    <div><b>Income side: beyond capacity.</b> A {v["area"]:.0f} m² flat costs {pub["price_to_income_years"].min():.0f} to
-    {pub["price_to_income_years"].max():.0f} years of average household income, and
-    {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].min().min():.1f} to
-    {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].max().max():.1f} times what
-    that household can borrow at mortgage rates of 10% to 14%.</div>
-  </div>
-  <p><b>Reading: rents support the price, local incomes cannot finance it.</b> The two checks disagree because of the gap
-  between the yield on government bonds ({100 * v["rf"]:.1f}%) and the rate households pay to borrow (10% to 14%). If the
-  discount rate of the rent-side check is raised above {100 * breakeven:.1f}%, that check fails as well. With credit this dear,
-  an average household cannot be the marginal buyer; who is (savings, family money, investors) cannot be told from these data.</p>
+  <p><b>Income side: beyond capacity, whatever the case.</b> A {v["area"]:.0f} m² flat costs {pub["price_to_income_years"].min():.0f} to
+  {pub["price_to_income_years"].max():.0f} years of average household income, and
+  {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].min().min():.1f} to
+  {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].max().max():.1f} times what
+  that household can borrow at mortgage rates of 10% to 14%. This result does not use the government yield.</p>
+  <p><b>Rent side: it depends on the discount rate.</b> The check asks what else the buyer's money could earn. In Paris the
+  government borrows at about the same rate as households, so the choice does not matter. In Vietnam the government borrows at
+  {100 * v["rf"]:.1f}% and households at 10% to 14%, and the answer changes with the rate. Incomes per person in the city grew
+  by about {100 * v["income_growth"]:.1f}% a year between 2010 and 2022; that is the ceiling for rents.</p>
+  <div class="table-scroll"><table><thead><tr><th>Discount rate taken</th><th class="num">Rate</th>
+  <th class="num">Rent growth the price requires (risk premium 1% to 4%)</th><th>Against the ceiling of {100 * v["income_growth"]:.1f}%</th></tr></thead>
+  <tbody>{rate_rows}</tbody></table></div>
+  <p>The price is defensible for a buyer who pays cash and compares with a deposit at a state-owned bank, and not for a buyer
+  who borrows. With credit this dear, an average household cannot be the marginal buyer; who is (savings, family money,
+  investors) cannot be told from these data.</p>
   <div class="table-scroll"><table><thead><tr><th>Price used</th><th>Lending case</th><th class="num">Price, in years of household income</th>
   <th class="num">Price / borrowing capacity at 10%</th><th class="num">at 12%</th><th class="num">at 14%</th></tr></thead><tbody>{rows}</tbody></table></div>
   <details><summary>Every input, with its source</summary><div class="table-scroll"><table><thead><tr><th>Input</th>

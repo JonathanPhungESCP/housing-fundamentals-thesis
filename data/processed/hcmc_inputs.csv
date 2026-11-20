@@ -10,6 +10,8 @@ rate_low,0.1,ratio,source,"Floating mortgage rate after the preferential period,
 rate_base,0.12,ratio,source,"Floating mortgage rate after the preferential period, lower bound of the 12-14% range","Viet Nam News via The Star, 3 March 2026",https://www.thestar.com.my/business/business-news/2026/03/03/rising-mortgage-rates-test-property-market,2026-11-20
 rate_high,0.14,ratio,source,"Floating mortgage rate after the preferential period, upper bound of the 12-14% range","Viet Nam News via The Star, 3 March 2026",https://www.thestar.com.my/business/business-news/2026/03/03/rising-mortgage-rates-test-property-market,2026-11-20
 down,0.3,ratio,source,Down payment: loans commonly cover 50-70% of the value,"Viet Nam News via The Star, 3 March 2026",https://www.thestar.com.my/business/business-news/2026/03/03/rising-mortgage-rates-test-property-market,2026-11-20
+deposit_state,0.055,ratio,source,"Highest posted deposit rate for individuals at the four state-owned banks, early November 2026","Vietbao, 3 November 2026",https://vietbao.vn/index%2Ephp/print-614379.html,2026-11-20
+deposit_online,0.07,ratio,source,"Upper end of 12-month online deposit rates at many banks (6.1-7%), 17 November 2026","Vietbao, 17 November 2026",https://vietbao.vn/index%2Ephp/print-616112.html,2026-11-20
 tau_delta,0.014,ratio,assumption,"Taxes and upkeep as a share of value: the Paris figure reused, no Vietnamese source read",,,
 area,60.0,m2,assumption,"Size of the flat priced: two bedrooms, no source on the median size sold",,,
 share,0.35,ratio,assumption,Share of income paid to the lender: the French convention; Vietnam sets no cap in the sources read,,,
