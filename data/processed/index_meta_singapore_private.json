@@ -3,7 +3,7 @@
   "2021Q4",
   "2026Q4"
  ],
- "n_sales": 101037,
+ "n_sales": 100774,
  "hedonic_numeric": [
   "log_area",
   "storey_mid",
@@ -21,7 +21,7 @@
   "sale_type"
  ],
  "strata_used": 8,
- "strata_coverage": 0.9976,
- "repeat_pairs": 36081,
+ "strata_coverage": 0.9975,
+ "repeat_pairs": 35960,
  "repeat_sales_kind": "pseudo repeat-sales (proxy unit)"
 }

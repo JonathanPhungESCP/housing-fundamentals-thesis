@@ -1,43 +1,44 @@
-build started 2026-11-14T14:17:59Z
+build started 2026-11-20T08:56:19Z
 Python 3.13.18
 OK    ingest_fx (0s)
-OK    ingest_rates (1s)
+OK    ingest_rates (0s)
 OK    ingest_paris (1s)
 OK    ingest_singapore (0s)
 OK    ingest_onemap (1s)
-OK    ingest_official (0s)
-OK    ingest_volumes (7s)
+OK    ingest_official (1s)
+OK    ingest_volumes (5s)
 OK    ingest_dvfplus (0s)
 URA access key provided to the build: yes
-OK    ingest_ura (100s)
-OK    ingest_ura_geocode (126s)
-OK    ingest_ura_dev (125s)
+OK    ingest_ura (91s)
+OK    ingest_ura_geocode (120s)
+OK    ingest_ura_dev (118s)
 OK    clean_paris (5s)
-OK    clean_singapore (6s)
+OK    clean_singapore (4s)
 OK    clean_private (5s)
-OK    features_paris (16s)
-OK    features_singapore (2s)
+OK    features_paris (12s)
+OK    features_singapore (1s)
 OK    features_private (1s)
-OK    levels (17s)
-OK    robust (53s)
-OK    indices (6s)
-OK    verdict (8s)
-OK    cross_checks (12s)
+OK    levels (11s)
+OK    robust (39s)
+OK    indices (5s)
+OK    verdict (5s)
+OK    cross_checks (7s)
 OK    early_warning (2s)
-OK    volumes (0s)
-OK    value_effect (3s)
-OK    district_cycles (10s)
-OK    tests (4s)
+OK    volumes (1s)
+OK    value_effect (2s)
+OK    district_cycles (7s)
+OK    hcmc_checks (1s)
+OK    tests (3s)
 --- probe: files of DVF+ open-data on data.gouv.fr
 licence: lov2 | temporal: {'end': '2025-12-31', 'start': '2014-01-01'}
   Documentation DVF+ | html | None | https://datafoncier.cerema.fr/donnees/autres-donnees-foncieres/dvfplus-open-data
   Données DVF+ open-data (csv + shp) | csv | None | https://cerema.app.box.com/v/dvfplus-opendata
   Données DVF+ open-data (dump PostgreSQL/PostGIS) | sql | None | https://cerema.app.box.com/v/dvfplus-opendata
 --- index metadata
-{ "periods": [  "2021Q3",  "2026Q2" ], "n_sales": 139829, "hedonic_numeric": [  "log_area",  "n_dependances" ], "hedonic_categorical": [  "district_l2",  "rooms_or_flat_type",  "epoque" ], "strata": [  "district_l1",  "rooms_cap" ], "strata_used": 79, "strata_coverage": 0.9973, "repeat_pairs": 4249, "repeat_sales_kind": "repeat-sales"}{ "periods": [  "2017Q1",  "2026Q4" ], "n_sales": 238198, "hedonic_numeric": [  "log_area",  "storey_mid",  "lease_remaining_years" ], "hedonic_categorical": [  "hdb_town",  "rooms_or_flat_type",  "flat_model" ], "strata": [  "hdb_town",  "rooms_or_flat_type" ], "strata_used": 79, "strata_coverage": 0.951, "repeat_pairs": 128596, "repeat_sales_kind": "pseudo repeat-sales (proxy unit)"}{ "periods": [  "2021Q4",  "2026Q4" ], "n_sales": 101037, "hedonic_numeric": [  "log_area",  "storey_mid",  "freehold",  "lease_term" ], "hedonic_categorical": [  "district_l1",  "rooms_or_flat_type",  "sale_type",  "market_segment" ], "strata": [  "market_segment",  "sale_type" ], "strata_used": 8, "strata_coverage": 0.9976, "repeat_pairs": 36081, "repeat_sales_kind": "pseudo repeat-sales (proxy unit)"}
+{ "periods": [  "2021Q3",  "2026Q2" ], "n_sales": 139829, "hedonic_numeric": [  "log_area",  "n_dependances" ], "hedonic_categorical": [  "district_l2",  "rooms_or_flat_type",  "epoque" ], "strata": [  "district_l1",  "rooms_cap" ], "strata_used": 79, "strata_coverage": 0.9973, "repeat_pairs": 4249, "repeat_sales_kind": "repeat-sales"}{ "periods": [  "2017Q1",  "2026Q4" ], "n_sales": 238198, "hedonic_numeric": [  "log_area",  "storey_mid",  "lease_remaining_years" ], "hedonic_categorical": [  "hdb_town",  "rooms_or_flat_type",  "flat_model" ], "strata": [  "hdb_town",  "rooms_or_flat_type" ], "strata_used": 79, "strata_coverage": 0.951, "repeat_pairs": 128596, "repeat_sales_kind": "pseudo repeat-sales (proxy unit)"}{ "periods": [  "2021Q4",  "2026Q4" ], "n_sales": 100774, "hedonic_numeric": [  "log_area",  "storey_mid",  "freehold",  "lease_term" ], "hedonic_categorical": [  "district_l1",  "rooms_or_flat_type",  "sale_type",  "market_segment" ], "strata": [  "market_segment",  "sale_type" ], "strata_used": 8, "strata_coverage": 0.9975, "repeat_pairs": 35960, "repeat_sales_kind": "pseudo repeat-sales (proxy unit)"}
 
 --- official index series
-oecd_house_prices_fra.csv 227 1970-Q1 2026-Q3 https://sdmx.oecd.org/public/rest/data/OECD.ECO.MPD,DSD_AN_H
+oecd_house_prices_fra.csv 228 1970-Q1 2026-Q4 https://sdmx.oecd.org/public/rest/data/OECD.ECO.MPD,DSD_AN_H
 --- volumes
 d_2d5ff9ea31397b66239f245f57751537 52203 2012-03 2014-12
 d_43f493c6c50d54243cc1eab0df142d6a 369651 2000-01 2012-02
@@ -102,17 +103,17 @@ dvf_plus_d75.csv already there
 --- value effect
 {'city': 'paris', 'formation_start': '2021-07', 'formation_end': '2022-06', 'end_start': '2025-06', 'end_end': '2026-05', 'districts': 79, 'mean_change_pct': np.float64(-7.907), 'sd_change_pct': np.float64(4.936), 'sd_signal': np.float64(0.098), 'slope': np.float64(31.431), 'slope_se': np.float64(4.142), 'slope_p': np.float64(0.0), 'change_for_10pct_dearer': np.float64(2.996), 'r2': np.float64(0.393), 'slope_with_price_level': np.float64(-8.111), 'slope_with_price_level_se': np.float64(5.252), 'slope_with_price_level_p': np.float64(0.127), 'spearman': np.float64(0.58), 'spearman_p': np.float64(0.0), 'dear_minus_cheap_third_pct': 6.674, 'gap_ci_low': np.float64(3.775), 'gap_ci_high': np.float64(8.376), 'raw_slope': np.float64(23.258)}
 {'city': 'singapore', 'formation_start': '2021-01', 'formation_end': '2021-12', 'end_start': '2025-11', 'end_end': '2026-10', 'districts': 129, 'mean_change_pct': np.float64(31.426), 'sd_change_pct': np.float64(3.957), 'sd_signal': np.float64(0.16), 'slope': np.float64(7.23), 'slope_se': np.float64(2.27), 'slope_p': np.float64(0.002), 'change_for_10pct_dearer': np.float64(0.689), 'r2': np.float64(0.085), 'slope_with_price_level': np.float64(7.761), 'slope_with_price_level_se': np.float64(2.301), 'slope_with_price_level_p': np.float64(0.001), 'spearman': np.float64(0.242), 'spearman_p': np.float64(0.006), 'dear_minus_cheap_third_pct': 2.121, 'gap_ci_low': np.float64(0.157), 'gap_ci_high': np.float64(3.716), 'raw_slope': np.float64(-6.209)}
-{'city': 'singapore_private', 'formation_start': '2022-01', 'formation_end': '2022-12', 'end_start': '2025-11', 'end_end': '2026-10', 'districts': 123, 'mean_change_pct': np.float64(19.418), 'sd_change_pct': np.float64(9.458), 'sd_signal': np.float64(0.255), 'slope': np.float64(-8.328), 'slope_se': np.float64(3.543), 'slope_p': np.float64(0.02), 'change_for_10pct_dearer': np.float64(-0.794), 'r2': np.float64(0.05), 'slope_with_price_level': np.float64(3.534), 'slope_with_price_level_se': np.float64(2.943), 'slope_with_price_level_p': np.float64(0.232), 'spearman': np.float64(-0.215), 'spearman_p': np.float64(0.017), 'dear_minus_cheap_third_pct': -3.494, 'gap_ci_low': np.float64(-8.768), 'gap_ci_high': np.float64(0.207), 'raw_slope': np.float64(-23.751)}
+{'city': 'singapore_private', 'formation_start': '2022-01', 'formation_end': '2022-12', 'end_start': '2025-11', 'end_end': '2026-10', 'districts': 123, 'mean_change_pct': np.float64(19.489), 'sd_change_pct': np.float64(9.511), 'sd_signal': np.float64(0.252), 'slope': np.float64(-9.157), 'slope_se': np.float64(3.581), 'slope_p': np.float64(0.012), 'change_for_10pct_dearer': np.float64(-0.873), 'r2': np.float64(0.059), 'slope_with_price_level': np.float64(2.726), 'slope_with_price_level_se': np.float64(3.045), 'slope_with_price_level_p': np.float64(0.373), 'spearman': np.float64(-0.217), 'spearman_p': np.float64(0.016), 'dear_minus_cheap_third_pct': -4.795, 'gap_ci_low': np.float64(-9.1), 'gap_ci_high': np.float64(-0.359), 'raw_slope': np.float64(-23.934)}
 --- raw files
 0 .gitkeep
 0 .manifest.lock
-36556 MANIFEST.csv
+36565 MANIFEST.csv
 186563738 dvfplus/dvf_plus_d75.csv
 1083818 fx/ecb_eurofxref_sgd_usd.csv
 2601 official/hdb_resale_price_index.csv
 1866 official/notaires_insee_paris_apartments.csv
-19089 official/oecd_house_prices_fra.csv
-982980 official/oecd_house_prices_panel.csv
+19108 official/oecd_house_prices_fra.csv
+982937 official/oecd_house_prices_panel.csv
 18260 official/ura_private_residential_price_index.csv
 24736 official/ura_private_residential_rental_index.csv
 202223 paris/arrondissements.geojson
@@ -169,21 +170,21 @@ dvf_plus_d75.csv already there
 2 singapore/ura/developer_sales/dev_sales_202307.json
 2 singapore/ura/developer_sales/dev_sales_202308.json
 2 singapore/ura/developer_sales/dev_sales_202309.json
-49295 singapore/ura/developer_sales/dev_sales_202310.json
-48958 singapore/ura/developer_sales/dev_sales_202311.json
-48351 singapore/ura/developer_sales/dev_sales_202312.json
-47845 singapore/ura/developer_sales/dev_sales_202401.json
-48209 singapore/ura/developer_sales/dev_sales_202402.json
-44863 singapore/ura/developer_sales/dev_sales_202403.json
-43182 singapore/ura/developer_sales/dev_sales_202404.json
-41506 singapore/ura/developer_sales/dev_sales_202405.json
-40598 singapore/ura/developer_sales/dev_sales_202406.json
-40516 singapore/ura/developer_sales/dev_sales_202407.json
-41226 singapore/ura/developer_sales/dev_sales_202408.json
-42710 singapore/ura/developer_sales/dev_sales_202409.json
-42536 singapore/ura/developer_sales/dev_sales_202410.json
-43459 singapore/ura/developer_sales/dev_sales_202411.json
-44855 singapore/ura/developer_sales/dev_sales_202412.json
+2 singapore/ura/developer_sales/dev_sales_202310.json
+49037 singapore/ura/developer_sales/dev_sales_202311.json
+48470 singapore/ura/developer_sales/dev_sales_202312.json
+47964 singapore/ura/developer_sales/dev_sales_202401.json
+48328 singapore/ura/developer_sales/dev_sales_202402.json
+45032 singapore/ura/developer_sales/dev_sales_202403.json
+43351 singapore/ura/developer_sales/dev_sales_202404.json
+41675 singapore/ura/developer_sales/dev_sales_202405.json
+40767 singapore/ura/developer_sales/dev_sales_202406.json
+40685 singapore/ura/developer_sales/dev_sales_202407.json
+41385 singapore/ura/developer_sales/dev_sales_202408.json
+42869 singapore/ura/developer_sales/dev_sales_202409.json
+42695 singapore/ura/developer_sales/dev_sales_202410.json
+43618 singapore/ura/developer_sales/dev_sales_202411.json
+45014 singapore/ura/developer_sales/dev_sales_202412.json
 --- official index headers
 data/raw/official/hdb_resale_price_index.csv
 quarter,index,_id
@@ -211,9 +212,9 @@ period,index
       2 103.9
 data/raw/official/oecd_house_prices_fra.csv
 period,HPI,RPI,HPI_YDH,HPI_RPI,RHP
-1970-Q1,6.62326752542258,10.6370404230387,,62.2658942667031,42.6762310845401
-1970-Q2,6.57391164843011,10.7404373219334,,61.2069361034719,41.7566614843514
-      1 
+1970-Q1,6.62326752542258,10.6370404230387,,62.2658942673455,42.6762310845401
+1970-Q2,6.57391164843011,10.7404373219334,,61.2069361041034,41.7566614843514
+      2 
       1 10.0449487965261
       1 10.3210472130481
       1 10.4919036535456
@@ -246,4 +247,4 @@ quarter,property_type,locality,index,_id
      91 Landed
     364 Non-Landed
       1 property_type
-build finished 2026-11-14T14:26:30Z
+build finished 2026-11-20T09:03:48Z
