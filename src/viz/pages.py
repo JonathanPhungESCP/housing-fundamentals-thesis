@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from src.config import ROOT
 
-from src.viz.sections import cross_section, cycle_section, history_section, home_section, index_section, verdict_section
+from src.viz.sections import cross_section, cycle_section, hcmc_section, history_section, home_section, index_section, verdict_section
 
 SITE = ROOT / "site"
 MAPLIBRE = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl"
@@ -266,7 +266,7 @@ HCMC = """
 compensation (Resolution 87/2025/NQ-HĐND of the HCMC People's Council, in force since 1 January 2026). They are neither
 transaction prices nor asking prices, they cover land only, and they have historically been well below market values.
 Vietnam publishes no transaction register and no rents, so the rent-capitalisation test run for Paris and Singapore
-cannot be run here.</div>
+cannot be run here; the two cross-checks further down use published city-wide averages instead.</div>
 <p class="meta-line"><span id="n-seg">…</span> priced street segments in <span id="n-units">…</span> wards, communes and
 special zone (the new city after the July 2025 merger with Bình Dương and Bà Rịa–Vũng Tàu). Values: residential land,
 million VND per m². Source: HCMC Official Gazette, issues 62+63 to 84+85 of 1 March 2026, extracted from the signed
@@ -319,7 +319,7 @@ def main() -> None:
         + methodology() + FOOT)
     (SITE / "hcmc.html").write_text(
         head("Ho Chi Minh City land values", "Official administrative land values by street segment in Ho Chi Minh City, 2026.", "hcm")
-        + HCMC + FOOT)
+        + HCMC.replace("<h2>By ward or commune</h2>", hcmc_section() + "\n<h2>By ward or commune</h2>", 1) + FOOT)
     for key, c in CITIES.items():
         if not (SITE / "data" / f"{key}_meta.json").exists():
             (SITE / f"{key}.html").write_text(

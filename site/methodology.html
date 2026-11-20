@@ -843,6 +843,44 @@ would be more cyclical.</p>
 <p><strong>What it changes for the question asked.</strong> A city-wide ratio hides where the adjustment
 happens. In Paris the correction of 2022–2024 was not spread evenly over an "overvalued"
 city; it fell on the quartiers where buyers borrow most, while the centre barely moved.</p>
+<h2>Ho Chi Minh City: what can be tested without a sales register</h2>
+<p>Method and inputs: <code>src/valuation/hcmc_checks.py</code>, <code>hcmc_checks.csv</code>, <code>hcmc_inputs.csv</code>.
+Vietnam publishes no register of sales and no official price or rent index. The index, the
+explosiveness test, the ratio history, the volume signal and the district cross-section
+cannot be run. The two cross-checks can, from city-wide averages read on 20 November 2026.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Inputs</th>
+<th>Result</th>
+<th>Reading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rent side</td>
+<td>gross yield 4.2% (3.2% to 5.2% tested), 10-year government yield 4.5%, taxes and upkeep 1.4% (assumed)</td>
+<td>required rent growth 1.7% to 6.7% a year, against income growth of 7.2% a year (2010–2022)</td>
+<td>plausible in every case</td>
+</tr>
+<tr>
+<td>Income side</td>
+<td>60 to 75 million VND/m², 60 m² (assumed), household income 28.2 million VND a month, 30% down, mortgage rates 10% to 14%</td>
+<td>price = 11 to 13 years of income; 1.6 to 3.8 times the borrowing capacity</td>
+<td>beyond capacity in every case</td>
+</tr>
+</tbody>
+</table>
+<p>Combined reading under the project's rule: rents support the price, local incomes cannot
+finance it. The opposite of Paris on the rent side (Paris needs rent growth that incomes do
+not deliver) and worse than Paris on the income side (1.56 in Paris).</p>
+<p>The disagreement between the two checks comes from one number: government bonds yield 4.5%
+while households borrow at 10% to 14%. With a discount rate above 9.0% the rent-side check
+fails too. At these borrowing costs the average household cannot be the marginal buyer.</p>
+<p>This is an order of magnitude, not a result of the same standing as Paris or Singapore:
+asking prices and averages, a yield quoted second-hand, an assumed flat size, national
+household size, and a city whose boundary changed in July 2025. No verdict is given.</p>
 <h2>What can be said firmly</h2>
 <ol>
 <li><strong>Paris: the 2000–2020 boom has largely deflated; there is no explosive dynamic today.</strong>
@@ -1537,6 +1575,13 @@ sales. For year t, the change in the quality-adjusted log price between t−1 an
 regressed on the average level in t−3 and t−2 (no shared observation), with robust standard
 errors. Groups: thirds of districts by level in 2014–2016 (Paris) and 2009–2011 (HDB),
 index 100 the following year. Choices fixed before the results.</p>
+<h2>18. Ho Chi Minh City cross-checks</h2>
+<p><code>src/valuation/hcmc_checks.py</code>. The two cross-checks of §13 computed from city-wide
+averages instead of sales: g* = r_f + τ + δ + γ − R/P against income growth, and price over
+borrowing capacity. Inputs, sources, URLs and the date read are in <code>hcmc_inputs.csv</code>;
+assumptions are flagged there. Each check is run over a range (yield ± 1 point; resale and
+new-build prices; two lending cases; mortgage rates 10%, 12%, 14%) and read with the rules
+of §13. Exploratory: outside the verdict table.</p>
 <h2>References</h2>
 <p>Checked on 2026-11-10 (authors, year, journal, volume and pages; DOI where given).</p>
 <ul>
@@ -1801,6 +1846,22 @@ standard errors.</p><h1>Limitations</h1>
 <li><strong>Few years, correlated districts.</strong> Nine yearly slopes for Paris; the t-statistics ignore
   spatial correlation. The link with credit conditions rests on two dated episodes.</li>
 <li><strong>Private homes in Singapore:</strong> no public transaction file before 2021 was found.</li>
+</ul>
+<h2>Ho Chi Minh City cross-checks (added 2026-11-20)</h2>
+<ul>
+<li><strong>No transaction data.</strong> Every figure is a published average; prices and rents are asking
+  figures from brokers' reports, most read through press coverage and not in the original.</li>
+<li><strong>Definitions disagree.</strong> Average prices for 2026 range from 60 to 112 million VND/m²
+  depending on the source (resale, new-build, newly launched projects; old or merged city).</li>
+<li><strong>Assumptions:</strong> 60 m² flat, taxes and upkeep 1.4% of value (the Paris figure), 35% or 50%
+  of income to the lender (Vietnam sets no cap in the sources read), household size 3.5
+  (national). The capacity ratio is proportional to the flat size and to the price.</li>
+<li><strong>Income:</strong> survey average per person, not a median, and possibly incomplete for informal
+  income; the 2025 figure is for the city after the merger with Bình Dương and Bà Rịa–Vũng Tàu,
+  the 2010–2022 growth for the former city.</li>
+<li><strong>Discount rate:</strong> the rent-side result holds with the government yield and reverses with
+  a rate above 9%; which rate applies to a Vietnamese household is not settled here.</li>
+<li><strong>One date.</strong> No history, so nothing can be said about dynamics or timing.</li>
 </ul></div></main>
 <footer><div class="wrap">
 Code and processed aggregates: see the project repository. Data: DGFiP / Etalab (DVF), Ville de Paris (ODbL),

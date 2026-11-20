@@ -465,3 +465,58 @@ def cycle_section(city: str) -> str:
   2013). The timing fits a credit channel but does not prove it; neighbouring districts move together, so the
   t-statistics overstate the precision. Details and limits on the methodology page.</p>
 </div>"""
+
+
+def hcmc_section() -> str:
+    """Ho Chi Minh City: the two cross-checks computed from published averages, with every input listed."""
+    fc, fi = PROCESSED / "hcmc_checks.csv", PROCESSED / "hcmc_inputs.csv"
+    if not fc.exists() or not fi.exists():
+        return ""
+    c, i = pd.read_csv(fc), pd.read_csv(fi).fillna("")
+    v = i.set_index("input")["value"]
+    pub = c[c["yield_case"] == "published"]
+    g = c["g_star_gamma1"].min(), c["g_star_gamma4"].max()
+    rows = "".join(
+        f"<tr><td>{'Secondary (resale)' if r.price_basis == 'secondary' else 'Primary (new-build)'}, {r.price_m2_vnd / 1e6:.0f} million VND/m²</td>"
+        f"<td>{r.lending_case}</td><td class='num'>{r.price_to_income_years:.1f}</td>"
+        f"<td class='num'>{r.price_over_capacity_rate10:.2f}</td><td class='num'>{r.price_over_capacity_rate12:.2f}</td>"
+        f"<td class='num'>{r.price_over_capacity_rate14:.2f}</td></tr>" for r in pub.itertuples())
+
+    def fmt(r) -> str:
+        x = float(r.value)
+        return (f"{100 * x:.2f}%" if r.unit.startswith("ratio") else f"{x / 1e6:.3g} million {r.unit}" if x >= 1e6 else f"{x:g} {r.unit}")
+    inputs = "".join(
+        f"<tr><td>{r.description}</td><td class='num'>{fmt(r)}</td>"
+        f"<td>{f'<a href={chr(34)}{r.url}{chr(34)}>{r.source}</a>' if r.url else '<i>assumption</i>'}</td></tr>" for r in i.itertuples())
+    breakeven = v["income_growth"] + v["gross_yield"] - v["tau_delta"] - 0.01
+    return f"""
+<h2>Two cross-checks from published averages</h2>
+<div class="card">
+  <p>The tests run on sales for Paris and Singapore need a register of transactions, which Vietnam does not publish.
+  The two cross-checks can still be computed from city-wide averages read in brokers' and official publications.
+  They use asking prices and averages, not medians of sales, and several assumptions; read them as orders of magnitude.</p>
+  <div class="grid-2">
+    <div><b>Rent side: plausible.</b> At a gross yield of {100 * v["gross_yield"]:.1f}% and a 10-year government yield of
+    {100 * v["rf"]:.1f}%, today's prices need rents to grow by {100 * g[0]:.1f}% to {100 * g[1]:.1f}% a year (yield one point
+    lower or higher, risk premium 1% to 4%). Incomes per person in the city grew by about {100 * v["income_growth"]:.1f}% a year
+    between 2010 and 2022, so every case is under the ceiling.</div>
+    <div><b>Income side: beyond capacity.</b> A {v["area"]:.0f} m² flat costs {pub["price_to_income_years"].min():.0f} to
+    {pub["price_to_income_years"].max():.0f} years of average household income, and
+    {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].min().min():.1f} to
+    {c[["price_over_capacity_rate10", "price_over_capacity_rate12", "price_over_capacity_rate14"]].max().max():.1f} times what
+    that household can borrow at mortgage rates of 10% to 14%.</div>
+  </div>
+  <p><b>Reading: rents support the price, local incomes cannot finance it.</b> The two checks disagree because of the gap
+  between the yield on government bonds ({100 * v["rf"]:.1f}%) and the rate households pay to borrow (10% to 14%). If the
+  discount rate of the rent-side check is raised above {100 * breakeven:.1f}%, that check fails as well. With credit this dear,
+  an average household cannot be the marginal buyer; who is (savings, family money, investors) cannot be told from these data.</p>
+  <div class="table-scroll"><table><thead><tr><th>Price used</th><th>Lending case</th><th class="num">Price, in years of household income</th>
+  <th class="num">Price / borrowing capacity at 10%</th><th class="num">at 12%</th><th class="num">at 14%</th></tr></thead><tbody>{rows}</tbody></table></div>
+  <details><summary>Every input, with its source</summary><div class="table-scroll"><table><thead><tr><th>Input</th>
+  <th class="num">Value</th><th>Source (read on 20 November 2026)</th></tr></thead><tbody>{inputs}</tbody></table></div></details>
+  <p class="note">Not run for lack of data: quality-adjusted price index, explosiveness test, history of the ratios, sales
+  volumes, cross-section of districts. Published averages differ widely with the definition (60 to 112 million VND/m² in 2026
+  depending on the source and on resale, new-build or newly launched projects), the city's boundary changed in July 2025, and
+  the income survey may not capture all informal income. Household income is income per person times the national household
+  size. No verdict is given for this city.</p>
+</div>"""

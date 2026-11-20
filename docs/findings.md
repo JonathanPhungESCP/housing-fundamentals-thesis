@@ -312,6 +312,30 @@ would be more cyclical.
 happens. In Paris the correction of 2022–2024 was not spread evenly over an "overvalued"
 city; it fell on the quartiers where buyers borrow most, while the centre barely moved.
 
+## Ho Chi Minh City: what can be tested without a sales register
+
+Method and inputs: `src/valuation/hcmc_checks.py`, `hcmc_checks.csv`, `hcmc_inputs.csv`.
+Vietnam publishes no register of sales and no official price or rent index. The index, the
+explosiveness test, the ratio history, the volume signal and the district cross-section
+cannot be run. The two cross-checks can, from city-wide averages read on 20 November 2026.
+
+| Check | Inputs | Result | Reading |
+|---|---|---|---|
+| Rent side | gross yield 4.2% (3.2% to 5.2% tested), 10-year government yield 4.5%, taxes and upkeep 1.4% (assumed) | required rent growth 1.7% to 6.7% a year, against income growth of 7.2% a year (2010–2022) | plausible in every case |
+| Income side | 60 to 75 million VND/m², 60 m² (assumed), household income 28.2 million VND a month, 30% down, mortgage rates 10% to 14% | price = 11 to 13 years of income; 1.6 to 3.8 times the borrowing capacity | beyond capacity in every case |
+
+Combined reading under the project's rule: rents support the price, local incomes cannot
+finance it. The opposite of Paris on the rent side (Paris needs rent growth that incomes do
+not deliver) and worse than Paris on the income side (1.56 in Paris).
+
+The disagreement between the two checks comes from one number: government bonds yield 4.5%
+while households borrow at 10% to 14%. With a discount rate above 9.0% the rent-side check
+fails too. At these borrowing costs the average household cannot be the marginal buyer.
+
+This is an order of magnitude, not a result of the same standing as Paris or Singapore:
+asking prices and averages, a yield quoted second-hand, an assumed flat size, national
+household size, and a city whose boundary changed in July 2025. No verdict is given.
+
 ## What can be said firmly
 
 1. **Paris: the 2000–2020 boom has largely deflated; there is no explosive dynamic today.**

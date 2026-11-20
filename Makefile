@@ -44,6 +44,7 @@ verdict:
 	$(PY) -m src.valuation.volumes
 	$(PY) -m src.valuation.value_effect
 	$(PY) -m src.valuation.district_cycles
+	$(PY) -m src.valuation.hcmc_checks
 
 ## Static website data and pages (site/)
 site:

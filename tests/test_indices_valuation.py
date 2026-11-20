@@ -420,3 +420,14 @@ def test_district_cycles_slope_appears_only_when_built_in():
     assert s.loc[2019, "t"] > 4 and (s.drop(2019)["t"].abs() < 3).all()
     g = DC.group_index(p, (2010, 2012))
     assert set(g["group"]) == {"cheapest third", "middle third", "dearest third"} and (g[g["year"] == 2013]["index"].round(6) == 100).all()
+
+
+def test_hcmc_checks_arithmetic_and_sources():
+    from src.valuation import hcmc_checks as H
+    c = H.check1(0.04, 0.045, 0.015, 0.07)
+    assert abs(c["g_star_gamma2"] - 0.04) < 1e-12 and c["check1"] == "plausible"
+    assert H.check1(0.04, 0.10, 0.015, 0.07)["check1"] == "implausible"
+    r = H.capacity_ratio(60e6, 60, 28e6, 0.12, 0.35, 25, 0.30)
+    assert abs(r - 3.6e9 * 0.7 / (0.35 * 28e6 * H.annuity(0.12, 25))) < 1e-9 and 2 < r < 3
+    for name, (value, unit, kind, desc, source, url) in H.INPUTS.items():
+        assert kind in ("source", "assumption") and (url.startswith("https://") if kind == "source" else url == ""), name
