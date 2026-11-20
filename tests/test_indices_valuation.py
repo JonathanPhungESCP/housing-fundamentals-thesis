@@ -441,3 +441,29 @@ def test_hcmc_context_is_sourced_and_consistent():
     avg = b.xs("Average household")
     assert avg.iloc[0] < avg.iloc[1] and (b.groupby(level=0).min() < b.groupby(level=0).max()).all()
     assert 10_000 < C.remittance_flats() < 25_000
+
+
+def test_dynamic_pv_recovers_a_world_without_premium():
+    from src.valuation import dynamic_pv as D
+    rng = np.random.default_rng(11)
+    n, rho = 600, 0.99
+    i, dr = np.zeros(n), np.zeros(n)
+    for t in range(1, n):
+        i[t] = 0.95 * i[t - 1] + rng.normal(0, 0.002)
+        dr[t] = 0.6 * dr[t - 1] + rng.normal(0, 0.004)
+    # with AR(1) forecasts, sum_j rho^j E[x_{t+1+j}] = phi / (1 - rho phi) x_t; no premium term
+    rp = 0.95 / (1 - rho * 0.95) * i - 0.6 / (1 - rho * 0.6) * dr
+    X = np.column_stack([rp, dr, i])
+    X = X - X.mean(axis=0)
+    A_true = np.array([[0, -0.6 / (1 - rho * 0.6) * 0.6, 0.95 / (1 - rho * 0.95) * 0.95], [0, 0.6, 0], [0, 0, 0.95]])
+    s = D.decompose(X, rho, A_true)["shares"]          # with the true dynamics the premium vanishes
+    assert abs(s["premium"]) < 1e-6 and s["real_rates"] > 0.9 and abs(sum(s.values()) - 1) < 1e-9
+    est = D.decompose(X, rho)["shares"]                # estimated on the sample, some of it is booked as premium
+    null = D.premium_share_without_premium(X, rho, np.random.default_rng(1), n=60)
+    assert abs(sum(est.values()) - 1) < 1e-9 and len(null) > 30 and np.quantile(null, 0.95) > 0.05
+    idx = pd.period_range("1980Q1", periods=n, freq="Q")
+    cpi = pd.Series(100 * np.exp(np.cumsum(np.full(n, 0.005))), index=idx)
+    q = D.frame(pd.Series(100 * np.exp(np.cumsum(dr + 0.005)), index=idx), pd.Series(100.0, index=idx),
+                pd.Series(0.04, index=idx[-8:]), pd.Series(4.0, index=idx), cpi)
+    assert abs(q["dr"].iloc[5] - dr[5 + 4]) < 1e-9 and abs(q["i"].iloc[0] - (0.04 - 0.02) / 4) < 1e-9
+    assert abs(4 * np.exp(q["rp"].iloc[-8:].mean()) - 0.04) < 0.002

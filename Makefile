@@ -15,6 +15,7 @@ data:
 	$(PY) -m src.ingest.official_indices   # Singapore official indices; Paris index: see the module docstring
 	$(PY) -m src.ingest.volumes            # long transaction counts and purchase intentions
 	$(PY) -m src.ingest.dvfplus            # Paris sales 2014-2025 (Cerema DVF+ open-data)
+	$(PY) -m src.ingest.hongkong           # Hong Kong official indices, yields, lending rate, CPI
 
 ## Clean + harmonise transactions, then build features
 features:
@@ -44,6 +45,7 @@ verdict:
 	$(PY) -m src.valuation.volumes
 	$(PY) -m src.valuation.value_effect
 	$(PY) -m src.valuation.district_cycles
+	$(PY) -m src.valuation.dynamic_pv
 	$(PY) -m src.valuation.hcmc_checks
 	$(PY) -m src.valuation.hcmc_context
 

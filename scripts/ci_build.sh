@@ -28,6 +28,7 @@ step ingest_onemap    python -m src.ingest.onemap
 step ingest_official  python -m src.ingest.official_indices
 step ingest_volumes   python -m src.ingest.volumes
 step ingest_dvfplus   python -m src.ingest.dvfplus
+step ingest_hongkong  python -m src.ingest.hongkong
 echo "URA access key provided to the build: $([ -n "${URA_ACCESS_KEY:-}" ] && echo yes || echo no)" >> "$REPORT"
 if [ -n "${URA_ACCESS_KEY:-}" ]; then
   step ingest_ura         python -m src.ingest.ura
@@ -56,6 +57,7 @@ step early_warning    python -m src.valuation.early_warning
 step volumes          python -m src.valuation.volumes
 step value_effect     python -m src.valuation.value_effect
 step district_cycles  python -m src.valuation.district_cycles
+step dynamic_pv       python -m src.valuation.dynamic_pv
 step hcmc_checks      python -m src.valuation.hcmc_checks
 step hcmc_context     python -m src.valuation.hcmc_context
 step tests            python -m pytest -q tests
@@ -77,7 +79,7 @@ PY
 { echo "--- index metadata"; cat data/processed/index_meta_*.json 2>/dev/null | tr -d '\n' | cut -c1-3000; echo;
   echo "--- official index series"; tail -n 4 logs/ingest_official.log | cut -c1-600; } >> "$REPORT"
 
-{ echo "--- volumes"; tail -n 14 logs/ingest_volumes.log 2>/dev/null | cut -c1-500; tail -n 8 logs/volumes.log 2>/dev/null | cut -c1-900; echo "--- district cycles"; tail -n 60 logs/district_cycles.log 2>/dev/null | cut -c1-300; tail -n 3 logs/ingest_dvfplus.log 2>/dev/null | cut -c1-300; echo "--- value effect"; tail -n 8 logs/value_effect.log 2>/dev/null | cut -c1-1500; } >> "$REPORT"
+{ echo "--- volumes"; tail -n 14 logs/ingest_volumes.log 2>/dev/null | cut -c1-500; tail -n 8 logs/volumes.log 2>/dev/null | cut -c1-900; echo "--- hong kong"; tail -n 45 logs/ingest_hongkong.log 2>/dev/null | cut -c1-400; echo "--- dynamic pv"; tail -n 30 logs/dynamic_pv.log 2>/dev/null | cut -c1-1600; echo "--- district cycles"; tail -n 60 logs/district_cycles.log 2>/dev/null | cut -c1-300; tail -n 3 logs/ingest_dvfplus.log 2>/dev/null | cut -c1-300; echo "--- value effect"; tail -n 8 logs/value_effect.log 2>/dev/null | cut -c1-1500; } >> "$REPORT"
 
 { echo "--- raw files"; find data/raw -type f -not -name '*.pdf' -printf '%s %P\n' | sort -k2 | head -80;
   echo "--- official index headers"; for f in data/raw/official/*.csv; do [ -f "$f" ] && { echo "$f"; head -n 3 "$f" | cut -c1-300; cut -d, -f2 "$f" | sort | uniq -c | head -8; }; done;
