@@ -181,7 +181,7 @@ def markets() -> dict[str, pd.DataFrame]:
     out = {}
     cpi = pd.read_csv(PROCESSED / "macro_cpi.csv", dtype={"period": str}).set_index("period")
     cpi.index = pd.PeriodIndex(cpi.index, freq="Q")
-    for city, rate_file, cpi_col in (("paris", "rf_paris.csv", "cpi_france"), ("singapore_private", "rf_singapore.csv", "cpi_singapore")):
+    for city, rate_file, cpi_col in (("paris", "rf_paris_long.csv", "cpi_france"), ("singapore_private", "rf_singapore.csv", "cpi_singapore")):
         try:
             rent, price, anchor = _from_ratio_series(city, cpi_col)
             out[city] = frame(rent, price, anchor, _monthly_rate(INTERIM / rate_file), cpi[cpi_col])
@@ -191,6 +191,9 @@ def markets() -> dict[str, pd.DataFrame]:
         h = pd.read_csv(PROCESSED / "hk_series.csv", dtype={"period": str}).set_index("period")
         h.index = pd.PeriodIndex(h.index, freq="Q")
         out["hongkong"] = frame(h["rent_index"], h["price_index"], h["yield_pct"] / 100, h["best_lending_rate_pct"], h["cpi"])
+        # Added after the first results: since about 2000 new mortgages are priced well below the best
+        # lending rate, which has barely moved. The interbank rate follows what borrowers pay more closely.
+        out["hongkong_interbank"] = frame(h["rent_index"], h["price_index"], h["yield_pct"] / 100, h["interbank_pct"], h["cpi"])
     except Exception as e:
         print("hongkong skipped:", repr(e)[:300])
     return out
