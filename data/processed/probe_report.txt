@@ -1,18 +1,113 @@
-=== zip 204265080 bytes
-1_DONNEES_LIVRAISON/ | 0
-1_DONNEES_LIVRAISON/dvf_plus_d75.csv | 186563738
-1_DONNEES_LIVRAISON/dvf_plus_d77.csv | 171472869
-1_DONNEES_LIVRAISON/dvf_plus_d78.csv | 139859367
-1_DONNEES_LIVRAISON/dvf_plus_d91.csv | 123819473
-1_DONNEES_LIVRAISON/dvf_plus_d92.csv | 141342767
-1_DONNEES_LIVRAISON/dvf_plus_d93.csv | 113257041
-1_DONNEES_LIVRAISON/dvf_plus_d94.csv | 111101782
-1_DONNEES_LIVRAISON/dvf_plus_d95.csv | 113720583
-4_METADONNEES_LIVRAISON/ | 0
-5_SUPPLEMENTS_LIVRAISON/ | 0
---- 1_DONNEES_LIVRAISON/dvf_plus_d75.csv: sep '|', 63 columns: ['idmutation', 'idmutinvar', 'idopendata', 'idnatmut', 'codservch', 'refdoc', 'datemut', 'anneemut', 'moismut', 'coddep', 'libnatmut', 'nbartcgi', 'l_artcgi', 'vefa', 'valeurfonc', 'nbdispo', 'nblot', 'nbcomm', 'l_codinsee', 'nbsection', 'l_section', 'nbpar', 'l_idpar', 'nbparmut', 'l_idparmut', 'nbsuf', 'sterr', 'l_dcnt', 'nbvolmut', 'nblocmut', 'l_idlocmut', 'nblocmai', 'nblocapt', 'nblocdep', 'nblocact', 'nbapt1pp', 'nbapt2pp', 'nbapt3pp', 'nbapt4pp', 'nbapt5pp', 'nbmai1pp', 'nbmai2pp', 'nbmai3pp', 'nbmai4pp', 'nbmai5pp', 'sbati', 'sbatmai', 'sbatapt', 'sbatact', 'sapt1pp', 'sapt2pp', 'sapt3pp', 'sapt4pp', 'sapt5pp', 'smai1pp', 'smai2pp', 'smai3pp', 'smai4pp', 'smai5pp', 'codtypbien', 'libtypbien', 'geompar_x', 'geompar_y']
-  sample: {"datemut": "2014-02-27", "anneemut": "2014", "coddep": "75", "libnatmut": "Vente", "vefa": "False", "valeurfonc": "229200.0", "l_codinsee": "75111", "l_section": "AT", "nblocmut": "1", "nblocapt": "1", "nblocdep": "0", "nbapt1pp": "1", "nbapt2pp": "0", "nbapt3pp": "0", "nbapt4pp": "0", "nbapt5pp": "0", "sbati": "16.0", "sbatapt": "16.0", "codtypbien": "121", "libtypbien": "UN APPARTEMENT"}
-  sample: {"datemut": "2014-10-17", "anneemut": "2014", "coddep": "75", "libnatmut": "Vente", "vefa": "False", "valeurfonc": "780000.0", "l_codinsee": "75120", "l_section": "BO", "nblocmut": "3", "nblocapt": "1", "nblocdep": "2", "nbapt1pp": "0", "nbapt2pp": "0", "nbapt3pp": "1", "nbapt4pp": "0", "nbapt5pp": "0", "sbati": "85.0", "sbatapt": "85.0", "codtypbien": "121", "libtypbien": "UN APPARTEMENT"}
-  sample: {"datemut": "2014-09-10", "anneemut": "2014", "coddep": "75", "libnatmut": "Vente", "vefa": "False", "valeurfonc": "610000.0", "l_codinsee": "75115", "l_section": "AG", "nblocmut": "1", "nblocapt": "1", "nblocdep": "0", "nbapt1pp": "0", "nbapt2pp": "0", "nbapt3pp": "1", "nbapt4pp": "0", "nbapt5pp": "0", "sbati": "71.0", "sbatapt": "71.0", "codtypbien": "121", "libtypbien": "UN APPARTEMENT"}
-  Paris rows 498059; by year {'2014': 35612, '2015': 41183, '2016': 39977, '2017': 45843, '2018': 44682, '2019': 46064, '2020': 38155, '2021': 43565, '2022': 47064, '2023': 39295, '2024': 35987, '2025': 40632}
-  types: {"UN APPARTEMENT": 360028, "UNE DEPENDANCE": 56941, "ACTIVITE": 32152, "DEUX APPARTEMENTS": 17639, "BATI MIXTE - LOGEMENT/ACTIVITE": 8396, "DES DEPENDANCES": 8061, "APPARTEMENT INDETERMINE": 6894, "BATI - INDETERMINE : Vefa sans descriptif": 4257, "UNE MAISON": 1763, "BATI - INDETERMINE : Vente avec volume(s)": 1361, "TERRAIN ARTIFICIALISE MIXTE": 274, "TERRAIN DE TYPE TAB": 108}
+=== data.gov.hk: RVD property market statistics
+licence/terms fields: {"license_id": null, "license_title": null, "license_url": null}
+187 resources
+Private Domestic - Average Rents by Class - Quarterly (1982-1998) | CSV | http://www.rvd.gov.hk/datagovhk/1.1Q(82-98).csv
+Private Domestic - Average Rents by Class - Annual (1986-1998) | CSV | http://www.rvd.gov.hk/datagovhk/1.1A(86-98).csv
+Private Domestic - Average Prices by Class - Quarterly (1982-1998) | CSV | http://www.rvd.gov.hk/datagovhk/1.2Q(82-98).csv
+Private Domestic - Average Prices by Class - Annual (1986-1998) | CSV | http://www.rvd.gov.hk/datagovhk/1.2A(86-98).csv
+Private Domestic - Average Rents by Class - Annual (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.1A(from_99).csv
+Private Domestic - Average Prices by Class - Annual (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.2A(from_99).csv
+Private Domestic - Rental Indices by Class (Territory-wide) - Annual (from 1980) | CSV | http://www.rvd.gov.hk/datagovhk/1.3A.csv
+Private Domestic - Price Indices by Class (Territory-wide) - Annual (from 1980) | CSV | http://www.rvd.gov.hk/datagovhk/1.4A.csv
+Private Domestic - Property Market Yields - Annual (from 1987) | CSV | http://www.rvd.gov.hk/datagovhk/5.1A.csv
+Private Non-Domestic - Property Market Yields - Annual (from 1987) | CSV | http://www.rvd.gov.hk/datagovhk/5.2A.csv
+Private Domestic - Average Rents by Class (from 1982) | XLS | http://www.rvd.gov.hk/doc/en/statistics/his_data_1.xls
+Private Domestic - Average Rents by Class - Monthly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.1M.csv
+Private Domestic - Average Rents by Class - Quarterly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.1Q(from_99).csv
+Private Domestic - Average Prices by Class (from 1982) | XLS | http://www.rvd.gov.hk/doc/en/statistics/his_data_2.xls
+Private Domestic - Average Prices by Class - Monthly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.2M.csv
+Private Domestic - Average Prices by Class - Quarterly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/1.2Q(from_99).csv
+Private Domestic - Rental Indices by Class (Territory-wide) (from 1979) | XLS | http://www.rvd.gov.hk/doc/en/statistics/his_data_3.xls
+Private Domestic - Rental Indices by Class (Territory-wide) - Monthly (from 1993) | CSV | http://www.rvd.gov.hk/datagovhk/1.3M.csv
+Private Domestic - Rental Indices by Class (Territory-wide) - Quarterly (from 4th Qtr 1979) | CSV | http://www.rvd.gov.hk/datagovhk/1.3Q.csv
+Private Domestic - Price Indices by Class (Territory-wide) (from 1979) | XLS | http://www.rvd.gov.hk/doc/en/statistics/his_data_4.xls
+Private Domestic - Price Indices by Class (Territory-wide) - Monthly (from 1993) | CSV | http://www.rvd.gov.hk/datagovhk/1.4M.csv
+Private Domestic - Price Indices by Class (Territory-wide) - Quarterly (from 4th Qtr 1979) | CSV | http://www.rvd.gov.hk/datagovhk/1.4Q.csv
+Private Property Market Yields (from 1987) | XLS | http://www.rvd.gov.hk/doc/en/statistics/his_data_15.xls
+Private Domestic - Property Market Yields - Monthly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/5.1M.csv
+Private Domestic - Property Market Yields - Quarterly (from 1990) | CSV | http://www.rvd.gov.hk/datagovhk/5.1Q.csv
+Private Non-Domestic - Property Market Yields - Monthly (from 1999) | CSV | http://www.rvd.gov.hk/datagovhk/5.2M.csv
+Private Non-Domestic - Property Market Yields - Quarterly (from 1990) | CSV | http://www.rvd.gov.hk/datagovhk/5.2Q.csv
+--- http://www.rvd.gov.hk/datagovhk/1.1Q(82-98).csv: 70 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  RENTS  BY  CLASS [QUARTERLY[82-98]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Quarter,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Kowloom,Class A New Kowloom - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Ko
+   01-03/1982,78.5,,83.9,,73.1,,54,,73.1,,86.9,,62.4,,51.1,,87.6,,86.4,,61.3,Z,57.5,Z,108.5,,100.5,Z,89.4,Z,76.2,Z,122.7,,135.5,Z,-,,68.5,Z
+   04-06/1982,80.2,,91.4,,73.7,,56.3,,73.4,,83.8,,61.5,,53.4,,85,,90,,66.7,,39.5,Z,106.7,,84.2,,86.6,Z,68.3,,120.1,,68.2,Z,74.1,Z,76.1,Z
+   07-09/1982,76,,93.2,,72.7,,54.3,,74.1,,80.5,,63.6,,49.4,,82.7,,77.9,,72.8,,67.1,,103.4,,87.9,,81.9,,75,Z,122.6,,68.3,Z,74.1,Z,68.4,Z
+   10-12/1982,77.7,,90.3,,74.3,,60.3,,73.3,,85.5,,65.4,,51.4,,86.7,,73.1,,70.4,,64.3,,100.8,,89.2,,84,Z,76,Z,106.2,,98.6,Z,57.7,Z,52.5,Z
+   01-03/1983,77.5,,91.6,,72.3,,51.9,,73.8,,81.9,,59.6,,48.2,,76.7,,84.6,,68.9,,58.4,Z,95.4,,74.5,Z,68.9,Z,70.3,Z,97.8,,64.9,Z,71.7,Z,-,
+   04-06/1998,232.2,,207.9,,186.9,,156.2,,241.4,,171.7,,187.6,,143.5,,302,,230.2,,178.5,,176,,331.5,,281.3,,222.6,Z,203.6,,374.3,,223.2,Z,248.9,Z,190.2,
+   07-09/1998,220.3,,192.9,,180.5,,148.2,,217.1,,159.2,,170.6,,127.1,,271.9,,196,,212.9,,155.3,,308.4,,205.6,,205.2,Z,180.4,,354.2,,204.2,Z,183.5,Z,184.5,
+   10-12/1998,195.8,,184.9,,169.9,,139.7,,192.7,,160.6,,157.6,,120.9,,242.2,,185,,186.8,,146.3,,279.8,,210.1,,193.3,Z,175.5,,307,,219.5,Z,155.7,Z,172.9,
+--- http://www.rvd.gov.hk/datagovhk/1.1A(86-98).csv: 15 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  RENTS  BY  CLASS [ANNUAL[86-98]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Year,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Kowloom,Class A New Kowloom - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Kowlo
+   1986 ,73.6,,80.2,,74.8,,65.9,,75,,65.2,,64.3,,55.2,,85.1,,75,,70.3,,60.6,,103.7,,70.4,,78.8,,58,,124.1,,95.2,,74.8,,56.3,Z
+   1987 ,79,,91.2,,81.9,,71.5,,82.3,,78.1,,72.9,,65.8,,94.4,,85.5,,82.3,,71.4,,115.9,,84.1,,93.3,,70.1,,134.1,,100.5,,82.4,Z,74,Z
+   1988 ,94.6,,109.6,,95.3,,86.7,,100.7,,88,,82.7,,76.2,,119.2,,103.1,,101.7,,78.7,,139.7,,105.3,,106,,83.9,,149.7,,113.4,,100.7,Z,86.7,Z
+   1989 ,128.1,,141.1,,122.1,,107.3,,133.9,,120.6,,108.8,,102.3,,148.9,,135.8,,122.3,,109.5,,172,,141.7,,137.5,,112.9,,183.9,,156.5,,116.7,Z,101.4,Z
+   1990 ,150.4,,165.3,,132.8,,115.4,,151.4,,130.4,,119.6,,100.9,,164.8,,151.5,,146.3,,110.3,,175,,151.3,,151.7,,127,,187.5,,143,,137.5,Z,116.2,
+   1996 ,230.1,,205.4,,184.7,,142.2,,244.8,,174.2,,181.6,,129.4,,304,,203.6,,197,,176,,365.2,,211.8,,230.3,,218.7,,381.8,,229.1,,187.2,Z,202.1,
+   1997 ,255.2,,225.4,,208.5,,168.1,,277.2,,193.1,,205.1,,154.6,,362,,247.6,,216,,225.5,,394.1,,251.4,,264.1,,257.6,,427.7,,249,,229.8,,238.1,
+   1998 ,219,,197,,181,,148,,220,,165,,173,,134,,282,,207,,198,,162,,315,,240,,208,,193,,354,,219,,190,,184,
+--- http://www.rvd.gov.hk/datagovhk/1.2Q(82-98).csv: 70 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  PRICES  BY  CLASS [QUARTERLY[82-98]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Quarter,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Kowloom,Class A New Kowloom - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Ko
+   01-03/1982,9879,,9990,,8615,,N.A.,,10126,,9145,,7559,,N.A.,,10844,,12889,,9019,,N.A.,,13791,,11929,Z,9897,,N.A.,,16987,,14689,Z,12664,Z,N.A.,
+   04-06/1982,9562,,9598,,7858,,N.A.,,9892,,8604,,7374,,N.A.,,10601,,10356,,8234,,N.A.,,13051,,10526,Z,9618,,N.A.,,15276,,-,,9704,Z,N.A.,
+   07-09/1982,9156,,8896,,7576,,N.A.,,9698,,7553,,6935,,N.A.,,10461,,10826,,7105,,N.A.,,11775,,9984,Z,8901,,N.A.,,15078,Z,-,,9027,Z,N.A.,
+   10-12/1982,8602,,8185,,7334,,N.A.,,8923,,7164,,6816,,N.A.,,9917,,8135,Z,7452,,N.A.,,10391,,8942,Z,7782,Z,N.A.,,14742,Z,20270,Z,-,,N.A.,
+   01-03/1983,8620,,8007,,7622,,N.A.,,8440,,6565,,6555,,N.A.,,8525,,8133,,6764,,N.A.,,9225,,8054,,7613,,N.A.,,10460,,8757,Z,10634,Z,N.A.,
+   04-06/1998,55834,,45488,,44049,,44889,,62507,,41042,,51164,,43770,,76503,,59630,,56400,,51723,,79886,,74521,,65690,,56174,,93902,,84421,Z,81651,Z,64087,
+   07-09/1998,43957,,37652,,37533,,36886,,49727,,37476,,41452,,36270,,61936,,60422,,45465,,41179,,65262,,72636,,49088,,44403,,73160,,103512,Z,66625,Z,50427,
+   10-12/1998,41898,,36863,,35488,,35614,,48655,,36731,,39774,,34769,,59135,,49804,,43189,,41666,,65840,,56327,,51861,,45465,,75550,,67098,Z,70713,Z,52175,
+--- http://www.rvd.gov.hk/datagovhk/1.2A(86-98).csv: 15 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  PRICES  BY  CLASS [ANNUAL[86-98]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Year,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Kowloom,Class A New Kowloom - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Kowlo
+   1986 ,9134,,8968,,8944,,7635,^,9166,,7046,,7841,,6889,^,9760,,8451,,9426,,7686,^,10982,,9431,,10272,,7772,^,12080,,11386,,7471,Z,6534,^
+   1987 ,10975,,10837,,10896,,9454,,10868,,8187,,9573,,8663,,11631,,10182,,11212,,10092,,12209,,11373,,12029,,9741,,13708,,10369,Z,13194,,8284,
+   1988 ,13940,,13852,,13641,,12112,,13911,,10906,,11890,,11472,,14714,,13107,,13856,,12315,,15655,,13646,,15338,,12147,,17163,,17628,Z,17004,,11124,
+   1989 ,18076,,17698,,16729,,14379,,18343,,14670,,15149,,14102,,18949,,17278,,17286,,14150,,20089,,17054,,18914,,14790,,21751,,20823,Z,21226,Z,12827,
+   1990 ,20775,,19590,,18497,,15909,,20976,,16347,,16435,,15650,,20698,,19079,,19420,,12666,,20514,,18087,,20118,,15498,,20174,,24425,Z,19459,,15038,
+   1996 ,52369,,43721,,43193,,41713,,62125,,42836,,52297,,43230,,74573,,55321,,54927,,46601,,82364,,52923,,60582,,54889,,93657,,74247,,80924,,58670,
+   1997 ,69206,,56544,,57460,,59323,,83159,,54523,,69868,,59899,,104021,,77485,,81436,,72566,,115082,,79841,,84798,,79521,,135544,,128516,,122631,,80549,
+   1998 ,50687,,42155,,41422,,42063,,57203,,40880,,47876,,40935,,71676,,61639,,51428,,49259,,77009,,71109,,59678,,51977,,88213,,96633,,79249,,56499,
+--- http://www.rvd.gov.hk/datagovhk/1.1A(from_99).csv: 29 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  RENTS  BY  CLASS [ANNUAL[FROM99]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Year,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Kowloon,Class B Kowloon - Remarks,Class B New Territori
+   1999 ,193,,173,,133,,197,,157,,116,,248,,183,,140,,274,,187,,177,,307,,186,,175,
+   2000 ,192,,166,,130,,198,,149,,117,,252,,172,,144,,276,,195,,184,,316,,197,,174,
+   2001 ,187,,153,,120,,191,,146,,112,,254,,184,,141,,282,,233,,177,,328,,207,,186,
+   2002 ,165,,134,,105,,168,,132,,101,,225,,164,,122,,247,,196,,156,,305,,190,,169,
+   2003 ,152,,122,,93,,147,,120,,88,,191,,157,,103,,216,,172,,133,,261,,182,,146,
+   2023 ,456,,398,,313,,380,,337,,257,,413,,349,,256,,424,,353,,249,,435,,378,,224,
+   2024 ,481,,429,,329,,396,,363,,271,,426,,369,,269,,436,,358,,253,,445,,381,,221,
+   2025 ,497,,441,,345,,411,,371,,281,,435,,387,,279,,439,,373,,245,,458,,395,,219,
+--- http://www.rvd.gov.hk/datagovhk/1.2A(from_99).csv: 29 lines
+   PRIVATE  DOMESTIC  -  AVERAGE  PRICES  BY  CLASS [ANNUAL[FROM99]],,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+   Year,Class A Hong Kong,Class A Hong Kong - Remarks,Class A Kowloon,Class A Kowloon - Remarks,Class A New Territories,Class A New Territories - Remarks,Class B Hong Kong,Class B Hong Kong - Remarks,Class B Kowloon,Class B Kowloon - Remarks,Class B New Territori
+   1999 ,41861,,35471,,35735,,49287,,37095,,35042,,60751,,43952,,41192,,65659,,50325,,47353,,77537,,71226,,47514,
+   2000 ,35975,,30990,,31444,,43656,,31711,,31358,,54957,,38515,,37324,,63194,,46639,,41389,,80222,,70992,,44589,
+   2001 ,31922,,26560,,27883,,38783,,28317,,27841,,49358,,33792,,32685,,56904,,40968,,34812,,70312,,58686,,35676,
+   2002 ,29012,,23324,,24455,,34177,,24722,,24646,,42116,,30654,,29522,,51801,,37582,,31953,,65725,,49840,,35326,
+   2003 ,25746,,20867,,20843,,30497,,22020,,21317,,40375,,28143,,26743,,48352,,34204,,30500,,66281,,55400,,34461,
+   2023 ,154081,,134643,,130015,,159637,,142388,,121824,,192755,,161681,,130707,,214961,,187330,,121622,,265142,,201804,Z,108807,
+   2024 ,133798,,116031,,111902,,141278,,126432,,108743,,166516,,159806,,118114,,206138,,177259,,110692,,248796,,198794,,96197,
+   2025 ,130498,,115503,,110164,,134490,,123646,,104814,,163294,,157237,,114006,,191289,,172234,,108610,,224496,,193102,,93260,
+=== DBnomics: IMF IFS, Hong Kong and France
+IMF/IFS/Q.HK.PCPI_IX | Quarterly – Hong Kong, China – Prices, Consumer Price Index, All items, Index | 178 obs | ('1980-Q4', 26.4152157821904) .. ('2025-Q1', 146.834872719081)
+IMF/IFS/Q.HK.FILR_PA | Quarterly – Hong Kong, China – Financial, Interest Rates, Lending Rate, Percent per annum | 139 obs | ('1990-Q4', 10.0) .. ('2025-Q2', 5.25)
+IMF/IFS/Q.HK.FIMM_PA | Quarterly – Hong Kong, China – Financial, Interest Rates, Money Market, Percent per annum | 130 obs | ('1990-Q4', 11.5) .. ('2025-Q2', 1.52)
+IMF/IFS/Q.HK.FIGB_PA ERROR <HTTPError 404: 'NOT FOUND'>
+IMF/IFS/Q.HK.FIDR_PA | Quarterly – Hong Kong, China – Financial, Interest Rates, Deposit, Percent per annum | 126 obs | ('1994-Q1', 2.28333333333333) .. ('2025-Q2', 0.22)
+IMF/IFS/M.HK.PCPI_IX | Monthly – Hong Kong, China – Prices, Consumer Price Index, All items, Index | 536 obs | ('1980-10', 26.1801036393378) .. ('2025-05', 146.249155215139)
+IMF/IFS/Q.FR.PCPI_IX | Quarterly – France – Prices, Consumer Price Index, All items, Index | 282 obs | ('1955-Q1', 7.82922944271411) .. ('2025-Q2', 127.864294638301)
+IMF/IFS/Q.FR.FIGB_PA ERROR <HTTPError 404: 'NOT FOUND'>
+=== HKMA API
+hk-interbank-ir-endperiod | 364 records | keys ['end_of_month', 'ir_overnight', 'ir_1w', 'ir_1m', 'ir_3m', 'ir_6m', 'ir_9m', 'ir_12m']
+   {"end_of_month": "1996-07", "ir_overnight": null, "ir_1w": null, "ir_1m": 5.45313, "ir_3m": 5.67969, "ir_6m": 5.94531, "ir_9m": 6.11719, "ir_12m": 6.32031}
+   {"end_of_month": "2026-10", "ir_overnight": 2.77464, "ir_1w": 2.66923, "ir_1m": 2.70923, "ir_3m": 3.21256, "ir_6m": 3.45732, "ir_9m": null, "ir_12m": 3.94095}
+hkd-ir-effdates | 205 records | keys ['effect_date', 'dr_1w', 'dr_1m', 'dr_3m', 'dr_6m', 'dr_12m', 'savings_deposit_rate', 'best_lending_rate']
+   {"effect_date": "2025-10-31", "dr_1w": null, "dr_1m": null, "dr_3m": null, "dr_6m": null, "dr_12m": null, "savings_deposit_rate": null, "best_lending_rate": 5}
+   {"effect_date": "1971-05-05", "dr_1w": 4.5, "dr_1m": null, "dr_3m": 5.25, "dr_6m": 5.25, "dr_12m": 5.25, "savings_deposit_rate": 3.5, "best_lending_rate": 8}
+https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/hk-deposit-ir-endperiod?pagesize=1000&sortorder=asc ERROR <HTTPError 400: ''>
