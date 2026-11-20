@@ -431,3 +431,13 @@ def test_hcmc_checks_arithmetic_and_sources():
     assert abs(r - 3.6e9 * 0.7 / (0.35 * 28e6 * H.annuity(0.12, 25))) < 1e-9 and 2 < r < 3
     for name, (value, unit, kind, desc, source, url) in H.INPUTS.items():
         assert kind in ("source", "assumption") and (url.startswith("https://") if kind == "source" else url == ""), name
+
+
+def test_hcmc_context_is_sourced_and_consistent():
+    from src.valuation import hcmc_context as C
+    for row in C.PRICES + C.EVENTS + C.FACTS:
+        assert str(row[-1]).startswith("https://"), row
+    b = C.buyers().set_index(["buyer", "rate_case"])["price_over_capacity"]
+    avg = b.xs("Average household")
+    assert avg.iloc[0] < avg.iloc[1] and (b.groupby(level=0).min() < b.groupby(level=0).max()).all()
+    assert 10_000 < C.remittance_flats() < 25_000

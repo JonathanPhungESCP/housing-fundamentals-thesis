@@ -524,3 +524,113 @@ def hcmc_section() -> str:
   the income survey may not capture all informal income. Household income is income per person times the national household
   size. No verdict is given for this city.</p>
 </div>"""
+
+
+HCMC_SERIES = [("Resale", "var(--series-market)"), ("New-build, former city", "var(--series-strat)"),
+               ("New-build, merged city", "var(--series-official)")]
+
+
+def hcmc_context_section() -> str:
+    """Ho Chi Minh City: published prices with dated events, the two signals, who buys, and the figures behind them."""
+    from src.valuation.hcmc_context import EVENTS, remittance_flats
+
+    fp, ff, fb = (PROCESSED / f"hcmc_{k}.csv" for k in ("prices", "facts", "buyers"))
+    if not (fp.exists() and ff.exists() and fb.exists()):
+        return ""
+    p, facts, buyers = pd.read_csv(fp), pd.read_csv(ff), pd.read_csv(fb)
+    periods = _quarters(p["quarter"].min(), p["quarter"].max())
+    pos = {q: i for i, q in enumerate(periods)}
+    N, W, H, m = len(periods), 920, 320, {"l": 52, "r": 16, "t": 34, "b": 26}
+    X = lambda i: m["l"] + (i + 0.5) * (W - m["l"] - m["r"]) / N  # noqa: E731
+    lo, hi = 40, 100
+    Y = lambda v: H - m["b"] - (v - lo) / (hi - lo) * (H - m["t"] - m["b"])  # noqa: E731
+    e = [f'<line x1="{m["l"]}" x2="{W - m["r"]}" y1="{Y(t):.1f}" y2="{Y(t):.1f}" stroke="var(--grid)"/>'
+         f'<text x="{m["l"] - 8}" y="{Y(t) + 4:.1f}" text-anchor="end">{t}</text>' for t in range(lo, hi + 1, 10)]
+    e += [f'<text x="{X(i):.1f}" y="{H - 8}" text-anchor="middle">{q[:4]} Q{q[5]}</text>' for i, q in enumerate(periods) if q[5] in "13"]
+    for n, ev in enumerate(EVENTS, 1):
+        x = X(pos[ev[0]])
+        e.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{m["t"] + 7}" y2="{H - m["b"]}" stroke="var(--muted)" stroke-dasharray="3 3" opacity="0.7"/>'
+                 f'<circle cx="{x:.1f}" cy="{m["t"] - 2}" r="9" fill="var(--surface-1)" stroke="var(--text-primary)"/>'
+                 f'<text x="{x:.1f}" y="{m["t"] + 2}" text-anchor="middle" style="font-weight:600;fill:var(--text-primary);font-size:11px">{n}</text>')
+    series = []
+    for name, color in HCMC_SERIES:
+        s = p[p["series"] == name].sort_values("quarter")
+        pts = [(pos[q], float(v)) for q, v in zip(s["quarter"], s["million_vnd_m2"])]
+        e.append(f'<path d="{" ".join(f"{chr(77) if j == 0 else chr(76)}{X(i):.1f},{Y(v):.1f}" for j, (i, v) in enumerate(pts))}" fill="none" stroke="{color}" stroke-width="2"/>')
+        e += [f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="4" fill="{color}" stroke="var(--surface-1)" stroke-width="1.5"/>' for i, v in pts]
+        d = dict(pts)
+        series.append({"label": name, "color": color, "values": [d.get(i) for i in range(N)]})
+    e.append(f'<line class="xh" y1="{m["t"]}" y2="{H - m["b"]}" stroke="var(--muted)" visibility="hidden"/>'
+             f'<rect class="hit" x="{m["l"]}" y="0" width="{W - m["l"] - m["r"]}" height="{H}" fill="transparent"/>')
+    data = {"W": W, "l": m["l"], "r": m["r"], "periods": [q.replace("Q", " Q") for q in periods], "series": series}
+    swatch = lambda c: f'<span class="sw" style="background:{c};height:3px;vertical-align:middle"></span>'  # noqa: E731
+    legend = "".join(f'<span class="cls">{swatch(c)} {n}</span>' for n, c in HCMC_SERIES)
+    events = "".join(f"<li><b>{q.replace('Q', ' Q')} · {t}</b><br>{txt}<br><span class='ev-k'>Source: <a href=\"{u}\">{s}</a>.</span></li>"
+                     for q, t, txt, s, u in EVENTS)
+    ptable = "".join(f"<tr><td>{r.series}</td><td>{r.quarter.replace('Q', ' Q')}</td><td class='num'>{r.million_vnd_m2:g}</td>"
+                     f"<td><a href=\"{r.url}\">{r.source}</a></td></tr>" for r in p.sort_values(["series", "quarter"]).itertuples())
+    f = facts.set_index("figure")["value"]
+    val = lambda start: next(v for k, v in f.items() if k.startswith(start))  # noqa: E731
+    brow = "".join(f"<tr><td>{r.buyer}</td><td>{r.rate_case}</td><td class='num'>{r.household_income_month_vnd / 1e6:.1f}</td>"
+                   f"<td class='num'>{r.price_over_capacity:.2f}</td><td>{'within reach' if r.price_over_capacity <= 1 else 'out of reach'}</td></tr>"
+                   for r in buyers.itertuples())
+    frows, last = "", None
+    for r in facts.itertuples():
+        frows += (f"<tr><td>{r.theme if r.theme != last else ''}</td><td>{r.figure}</td><td class='num'>{r.value}</td>"
+                  f"<td><a href=\"{r.url}\">{r.source}</a></td></tr>")
+        last = r.theme
+    return f"""
+<h2>Prices, credit and sales since 2023</h2>
+<div class="card">
+  <p>Average prices of flats published by one broker (CBRE Vietnam), in million VND per m², with the dated events that the
+  sources report. These are averages of what is on offer, not a quality-adjusted index, and the new-build series breaks when
+  the city is enlarged in July 2025.</p>
+  <div class="legend">{legend}</div>
+  <div class="schart"><svg class="chart" viewBox="0 0 {W} {H}" role="img" aria-label="Average flat prices in Ho Chi Minh City">{"".join(e)}</svg>
+  <script type="application/json">{json.dumps(data)}</script></div>
+  <ol class="events">{events}</ol>
+  <p><b>The average overstates the rise.</b> Flats at or under 50 million VND/m² were close to half of sales in 2020 and
+  {val("Share of sales at or under")} in 2024; flats above 4 billion VND went from 2% of sales in 2020 to {val("Share of flats sold above")}
+  in the first nine months of 2024. Part of the increase in the average is a change in what is sold, which is what the
+  quality-adjusted indices correct for in Paris and Singapore.</p>
+  <details><summary>Table view of the chart, with sources</summary><div class="table-scroll"><table><thead><tr><th>Series</th><th>Quarter</th>
+  <th class="num">Million VND/m²</th><th>As reported by</th></tr></thead><tbody>{ptable}</tbody></table></div></details>
+</div>
+
+<h2>The two signals, read on the latest figures</h2>
+<div class="card">
+  <div class="table-scroll"><table><thead><tr><th>Signal</th><th>Latest figure</th><th>Reading</th></tr></thead><tbody>
+  <tr><td>Price against income</td><td>11 to 13 years of household income here; {val("Price-to-income ratio, Hanoi")} and {val("Price of a 60 m² resale flat")}
+  in two outside estimates</td><td>High, but there is no history to score it against the city's own past, as is done for Paris and Singapore</td></tr>
+  <tr><td>Sales</td><td>{val("Flats and houses sold nationwide")} nationwide; {val("Share of new supply sold in the city")} of new supply sold in the city;
+  unsold stock {val("Unsold stock reported")}</td><td>Under the rule fixed for Singapore (sales 20% below a year earlier) the flag would be on, on a national figure</td></tr>
+  </tbody></table></div>
+  <p>Of the markets studied, this is the only one where a stretched price-to-income ratio and falling sales are seen together
+  today. In the four past cases found in Singapore and Paris, that combination was followed once by a fall of at least 10%,
+  twice by smaller declines and once by nothing; it is a description of where the market stands, not a forecast.</p>
+</div>
+
+<h2>Who buys, if the average household cannot?</h2>
+<div class="card">
+  <div class="table-scroll"><table><thead><tr><th>Buyer</th><th>Mortgage rate</th><th class="num">Household income, million VND a month</th>
+  <th class="num">Price / borrowing capacity</th><th></th></tr></thead><tbody>{brow}</tbody></table></div>
+  <p class="meta-line">60 m² resale flat at 60 million VND/m², 30% down, 35% of income over 25 years.</p>
+  <ul>
+  <li><b>Credit was cheap when prices rose.</b> At the introductory rates of 2025 a better-off household could finance the
+  flat; at the rates applied once that period ends, it cannot. {val("Buyers of a home to live in")} of buyers of a home to live
+  in say they need a loan.</li>
+  <li><b>Foreign buyers are few:</b> {val("Homes acquired by foreigners")} homes acquired nationwide since the 2023 law, in a city
+  with {val("Flats built to date")} flats.</li>
+  <li><b>Money from abroad is large:</b> {val("Remittances received")} reached the city in 2025, of which about
+  {val("Share of remittances going to real estate")} goes to real estate. That would pay for about {round(remittance_flats(), -3):,.0f} such flats a year
+  (computed here, at about 26,000 VND per dollar); not all of it buys flats.</li>
+  <li><b>About a third of buyers are investors:</b> {val("Flat buyers by purpose")} (own home / to let / quick resale).</li>
+  </ul>
+  <p>The buyers are therefore better-off households with savings, families pooling money including from abroad, investors, and
+  households who borrowed at introductory rates. The share of each cannot be measured with these sources, and the gap between
+  the richest fifth and the average is the national one, applied to the city.</p>
+  <details><summary>All figures used on this page, with sources</summary><div class="table-scroll"><table><thead><tr><th>Theme</th><th>Figure</th>
+  <th class="num">Value</th><th>As reported by (read on 20 November 2026)</th></tr></thead><tbody>{frows}</tbody></table></div></details>
+  <p class="note">Most figures are read in press coverage of brokers' and official reports, not in the reports themselves. Sales
+  and unsold stock are national. Survey shares come from a property portal. The household count without a home dates from 2019.</p>
+</div>"""

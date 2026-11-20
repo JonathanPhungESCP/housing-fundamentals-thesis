@@ -342,6 +342,30 @@ to ten points apart. The price is defensible for a buyer who pays cash and compa
 deposit at a state-owned bank, and not for a buyer who borrows. At these borrowing costs the
 average household cannot be the marginal buyer.
 
+**Context read in published sources** (`src/valuation/hcmc_context.py`, `hcmc_prices.csv`,
+`hcmc_facts.csv`, `hcmc_buyers.csv`; chart and tables on the city page):
+
+- **Prices:** the broker's average for resale flats went from 45 million VND/m² at the end
+  of 2023 to 62 in Q2 2026 and 60 in Q3 2026; new-build from about 61 to 90 in the former
+  city by Q4 2025, then 75 for the enlarged city. Not quality-adjusted, and the mix moved
+  up-market: flats at or under 50 million VND/m² were close to half of sales in 2020 and
+  18% in 2024.
+- **Credit:** introductory rates of 5.5% to 6.5% in 2025, 12% to 14% in 2026 once they end;
+  real-estate credit up 36% in 2025 against 19% for all credit.
+- **Sales:** flats and houses sold nationwide down about 29% on a year in Q3 2026, unsold
+  stock up 94%, 45% of new supply sold in the city against 90% a quarter earlier. Under
+  the rule fixed for Singapore the volume flag would be on, on a national figure.
+- **Who buys:** at 6% a household of the richest fifth could finance the reference flat
+  (0.84 times its capacity) and at 12% it cannot (1.37); the average household cannot in
+  either case (1.64 and 2.69). Foreign buyers are few (1,519 homes nationwide since the
+  2023 law). Remittances to the city were 10.34 billion USD in 2025, about 22% of which
+  goes to real estate, the price of some 16,000 reference flats a year. About a third of
+  flat buyers in a portal survey buy to let or resell.
+
+Read together: prices rose while credit was cheap, credit is now dear, sales are falling
+and the resale average has started to slip. It is the sequence seen in Paris after 2022,
+observed here at its beginning and with far weaker data.
+
 This is an order of magnitude, not a result of the same standing as Paris or Singapore:
 asking prices and averages, a yield quoted second-hand, an assumed flat size, national
 household size, and a city whose boundary changed in July 2025. No verdict is given.

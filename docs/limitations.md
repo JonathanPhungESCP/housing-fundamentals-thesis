@@ -246,3 +246,8 @@ These are stated plainly because they bound what the results can say.
   which these data do not show. Deposit rates were read in press tables that do not agree
   with each other (5.5% at state-owned banks, 6.1% to 7% for online offers).
 - **One date.** No history, so nothing can be said about dynamics or timing.
+- **Context figures (added 2026-11-20):** read in press coverage of brokers' and official
+  reports, not in the originals; sources disagree on price levels; sales and unsold stock
+  are national; survey shares come from a property portal; the income gap of the richest
+  fifth is national and applied to the city; the exchange rate is rounded. The link between
+  credit conditions and prices is a reading of the sequence of events, not a test.
