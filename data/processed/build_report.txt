@@ -1,37 +1,37 @@
-build started 2026-11-20T10:47:54Z
+build started 2026-11-20T10:58:31Z
 Python 3.13.18
 OK    ingest_fx (0s)
 OK    ingest_rates (1s)
-OK    ingest_paris (0s)
+OK    ingest_paris (1s)
 OK    ingest_singapore (0s)
-OK    ingest_onemap (1s)
+OK    ingest_onemap (0s)
 OK    ingest_official (1s)
-OK    ingest_volumes (8s)
+OK    ingest_volumes (6s)
 OK    ingest_dvfplus (0s)
-OK    ingest_hongkong (10s)
+OK    ingest_hongkong (15s)
 URA access key provided to the build: yes
-OK    ingest_ura (88s)
-OK    ingest_ura_geocode (124s)
+OK    ingest_ura (92s)
+OK    ingest_ura_geocode (117s)
 OK    ingest_ura_dev (118s)
-OK    clean_paris (8s)
-OK    clean_singapore (7s)
-OK    clean_private (7s)
-OK    features_paris (20s)
-OK    features_singapore (2s)
+OK    clean_paris (5s)
+OK    clean_singapore (4s)
+OK    clean_private (5s)
+OK    features_paris (14s)
+OK    features_singapore (1s)
 OK    features_private (2s)
-OK    levels (26s)
-OK    robust (68s)
-OK    indices (8s)
-OK    verdict (9s)
-OK    cross_checks (12s)
+OK    levels (11s)
+OK    robust (41s)
+OK    indices (6s)
+OK    verdict (6s)
+OK    cross_checks (9s)
 OK    early_warning (1s)
-OK    volumes (1s)
-OK    value_effect (3s)
-OK    district_cycles (12s)
+OK    volumes (0s)
+OK    value_effect (2s)
+OK    district_cycles (9s)
 OK    dynamic_pv (3s)
-OK    hcmc_checks (1s)
+OK    hcmc_checks (0s)
 OK    hcmc_context (0s)
-OK    tests (6s)
+OK    tests (4s)
 --- probe: files of DVF+ open-data on data.gouv.fr
 licence: lov2 | temporal: {'end': '2025-12-31', 'start': '2014-01-01'}
   Documentation DVF+ | html | None | https://datafoncier.cerema.fr/donnees/autres-donnees-foncieres/dvfplus-open-data
@@ -60,29 +60,33 @@ paris purchase_intentions {'market': 'paris', 'signal': 'purchase_intentions', '
 5.1Q.csv | header: ['Quarter', 'Domestic Class A', 'Domestic Class A - Remarks', 'Domestic Class B', 'Domestic Class B - Remarks', 'Domestic Class C', 'Domestic Class C - Remarks', 'Domestic Class D', 'Domestic Class D - Remarks', 'Domestic Class E', 'Domestic Class E - Remarks', 'Domestic Classes D & E', 'Domestic Classes D & E - Remarks'] | rows 147 1990Q1 2026Q3
 best lending rate: 205 changes, 1971-05-05 to 2025-10-31
 cpi hongkong 178 1980Q4 2025Q1
-       price_index  rent_index  yield_pct  best_lending_rate_pct     cpi
-count       188.00      185.00     147.00                 188.00  178.00
-mean        152.70      114.35       4.05                   7.42   91.15
-std         122.47       51.35       1.46                   3.03   33.69
-min          16.50       33.20       2.17                   5.00   26.42
-25%          58.47       77.40       2.82                   5.00   65.76
-50%         103.85      103.70       3.87                   6.50   94.84
-75%         274.40      165.30       5.05                   8.81  117.41
-max         397.90      210.30       8.90                  18.17  146.83
-        price_index  rent_index  yield_pct  best_lending_rate_pct  cpi
-period                                                                
-1979Q4         16.5         NaN        NaN              14.500000  NaN
-1980Q1         18.4         NaN        NaN              14.846154  NaN
-1980Q2         18.4         NaN        NaN              14.840659  NaN
-        price_index  rent_index  yield_pct  best_lending_rate_pct  cpi
-period                                                                
-2026Q1        308.4       201.3   3.066667                    5.0  NaN
-2026Q2        321.3       204.0   3.000000                    5.0  NaN
-2026Q3        320.4       210.3   3.133333                    5.0  NaN
+       price_index  rent_index  yield_pct  best_lending_rate_pct     cpi  interbank_pct
+count       188.00      185.00     147.00                 188.00  178.00         130.00
+mean        152.70      114.35       4.05                   7.42   91.15           2.49
+std         122.47       51.35       1.46                   3.03   33.69           2.49
+min          16.50       33.20       2.17                   5.00   26.42           0.04
+25%          58.47       77.40       2.82                   5.00   65.76           0.13
+50%         103.85      103.70       3.87                   6.50   94.84           1.67
+75%         274.40      165.30       5.05                   8.81  117.41           4.62
+max         397.90      210.30       8.90                  18.17  146.83          11.50
+        price_index  rent_index  yield_pct  best_lending_rate_pct  cpi  interbank_pct
+period                                                                               
+1979Q4         16.5         NaN        NaN              14.500000  NaN            NaN
+1980Q1         18.4         NaN        NaN              14.846154  NaN            NaN
+1980Q2         18.4         NaN        NaN              14.840659  NaN            NaN
+        price_index  rent_index  yield_pct  best_lending_rate_pct  cpi  interbank_pct
+period                                                                               
+2026Q1        308.4       201.3   3.066667                    5.0  NaN            NaN
+2026Q2        321.3       204.0   3.000000                    5.0  NaN            NaN
+2026Q3        320.4       210.3   3.133333                    5.0  NaN            NaN
 cpi france 282 1955Q1 2025Q2
 cpi singapore 258 1961Q1 2025Q2
+france 10y: 490 1986-01 2026-10
 --- dynamic pv
-paris skipped: only 42 quarters
+paris {'first': '1992Q2', 'last': '2025Q2', 'quarters': 133, 'rho': np.float64(0.989), 'mean_yield_pct': np.float64(4.406), 'max_root': 0.995, 'stationary_enough': True, 'share_real_rates': np.float64(0.658), 'share_rent_growth': np.float64(-0.139), 'share_premium': np.float64(0.481), 'share_real_rates_low': np.float64(-0.126), 'share_real_rates_high': np.float64(1.918), 'share_rent_growth_low': np.float64(-0.812), 'share_rent_growth_high': np.float64(0.264), 'share_premium_low': np.float64(-0.304), 'share_premium_high': np.float64(0.956), 'bootstrap_draws_kept': 980, 'premium_share_if_no_premium_p05': -0.427, 'premium_share_if_no_premium_p50': 0.229, 'premium_share_if_no_premium_p95': 0.607, 'annual_share_real_rates': np.float64(0.716), 'annual_share_rent_growth': np.float64(-0.191), 'annual_share_premium': np.float64(0.475), 'annual_years': 32}
+          episode   from     to  change_price_to_rent_pct  log_price_to_rent_log_points  real_rates_log_points  rent_growth_log_points  premium_log_points
+lowest to highest 1998Q1 2020Q3                     243.6                         123.4                   74.7                   -14.7                63.5
+highest to latest 2020Q3 2025Q2                     -18.7                         -20.7                  -21.9                     6.0                -4.8
 singapore_private {'first': '2004Q2', 'last': '2025Q2', 'quarters': 85, 'rho': np.float64(0.992), 'mean_yield_pct': np.float64(3.142), 'max_root': 0.926, 'stationary_enough': True, 'share_real_rates': np.float64(0.269), 'share_rent_growth': np.float64(0.336), 'share_premium': np.float64(0.395), 'share_real_rates_low': np.float64(0.034), 'share_real_rates_high': np.float64(0.428), 'share_rent_growth_low': np.float64(-0.609), 'share_rent_growth_high': np.float64(1.294), 'share_premium_low': np.float64(-0.466), 'share_premium_high': np.float64(1.372), 'bootstrap_draws_kept': 1000, 'premium_share_if_no_premium_p05': -0.243, 'premium_share_if_no_premium_p50': 0.094, 'premium_share_if_no_premium_p95': 0.461, 'annual_share_real_rates': np.float64(0.348), 'annual_share_rent_growth': np.float64(0.847), 'annual_share_premium': np.float64(-0.195), 'annual_years': 20}
           episode   from     to  change_price_to_rent_pct  log_price_to_rent_log_points  real_rates_log_points  rent_growth_log_points  premium_log_points
 lowest to highest 2009Q1 2021Q1                      45.9                          37.8                   12.5                    15.7                 9.5
@@ -91,6 +95,10 @@ hongkong {'first': '1981Q4', 'last': '2025Q1', 'quarters': 174, 'rho': np.float6
           episode   from     to  change_price_to_rent_pct  log_price_to_rent_log_points  real_rates_log_points  rent_growth_log_points  premium_log_points
 lowest to highest 1984Q3 2021Q2                     392.0                         159.3                  -33.3                    35.1               157.5
 highest to latest 2021Q2 2025Q1                     -32.8                         -39.7                   10.3                    -9.6               -40.4
+hongkong_interbank {'first': '1990Q4', 'last': '2025Q1', 'quarters': 129, 'rho': np.float64(0.991), 'mean_yield_pct': np.float64(3.685), 'max_root': 0.951, 'stationary_enough': True, 'share_real_rates': np.float64(-0.063), 'share_rent_growth': np.float64(0.136), 'share_premium': np.float64(0.927), 'share_real_rates_low': np.float64(-0.375), 'share_real_rates_high': np.float64(0.349), 'share_rent_growth_low': np.float64(-0.357), 'share_rent_growth_high': np.float64(0.659), 'share_premium_low': np.float64(0.122), 'share_premium_high': np.float64(1.61), 'bootstrap_draws_kept': 1000, 'premium_share_if_no_premium_p05': -0.853, 'premium_share_if_no_premium_p50': 0.361, 'premium_share_if_no_premium_p95': 1.109, 'annual_share_real_rates': np.float64(0.218), 'annual_share_rent_growth': np.float64(0.094), 'annual_share_premium': np.float64(0.687), 'annual_years': 31}
+          episode   from     to  change_price_to_rent_pct  log_price_to_rent_log_points  real_rates_log_points  rent_growth_log_points  premium_log_points
+lowest to highest 1990Q4 2021Q2                     265.1                         129.5                  -19.1                    17.5               131.1
+highest to latest 2021Q2 2025Q1                     -32.8                         -39.7                   -2.4                    -7.3               -30.0
 --- district cycles
 paris districts 80 years 2014 2025 sales 343152
  year  districts  mean_change_pct  slope     t
@@ -147,7 +155,7 @@ dvf_plus_d75.csv already there
 --- raw files
 0 .gitkeep
 0 .manifest.lock
-38238 MANIFEST.csv
+38754 MANIFEST.csv
 186563738 dvfplus/dvf_plus_d75.csv
 1083818 fx/ecb_eurofxref_sgd_usd.csv
 11905 hongkong/1.3Q.csv
@@ -157,6 +165,7 @@ dvf_plus_d75.csv already there
 240231 macro/cpi_france.json
 235196 macro/cpi_hongkong.json
 239221 macro/cpi_singapore.json
+232542 macro/hk_interbank.json
 2601 official/hdb_resale_price_index.csv
 1866 official/notaires_insee_paris_apartments.csv
 19108 official/oecd_house_prices_fra.csv
@@ -179,6 +188,7 @@ dvf_plus_d75.csv already there
 1262238 paris/loyers_reference.csv
 354392 paris/quartiers.geojson
 50969 rates/ecb_irs_fr_10y.csv
+176220 rates/ecb_irs_fr_10y_full.csv
 87642 rates/ecb_mir_fr_house_purchase.csv
 97690 rates/singstat_M700071.json
 3750 singapore/census2020_hh_income_work_by_pa.csv
@@ -223,8 +233,6 @@ dvf_plus_d75.csv already there
 47964 singapore/ura/developer_sales/dev_sales_202401.json
 48328 singapore/ura/developer_sales/dev_sales_202402.json
 45032 singapore/ura/developer_sales/dev_sales_202403.json
-43351 singapore/ura/developer_sales/dev_sales_202404.json
-41675 singapore/ura/developer_sales/dev_sales_202405.json
 --- official index headers
 data/raw/official/hdb_resale_price_index.csv
 quarter,index,_id
@@ -287,4 +295,4 @@ quarter,property_type,locality,index,_id
      91 Landed
     364 Non-Landed
       1 property_type
-build finished 2026-11-20T10:57:01Z
+build finished 2026-11-20T11:06:26Z

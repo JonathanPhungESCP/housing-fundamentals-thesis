@@ -1,5 +1,9 @@
 episode,from,to,change_price_to_rent_pct,log_price_to_rent_log_points,real_rates_log_points,rent_growth_log_points,premium_log_points,market
+lowest to highest,1998Q1,2020Q3,243.55,123.42,74.68,-14.73,63.46,paris
+highest to latest,2020Q3,2025Q2,-18.68,-20.68,-21.89,5.96,-4.76,paris
 lowest to highest,2009Q1,2021Q1,45.87,37.75,12.54,15.71,9.5,singapore_private
 highest to latest,2021Q1,2025Q2,-11.23,-11.91,-4.56,3.61,-10.95,singapore_private
 lowest to highest,1984Q3,2021Q2,392.03,159.34,-33.28,35.07,157.54,hongkong
 highest to latest,2021Q2,2025Q1,-32.76,-39.68,10.34,-9.63,-40.39,hongkong
+lowest to highest,1990Q4,2021Q2,265.13,129.51,-19.06,17.46,131.11,hongkong_interbank
+highest to latest,2021Q2,2025Q1,-32.76,-39.68,-2.39,-7.33,-29.96,hongkong_interbank
