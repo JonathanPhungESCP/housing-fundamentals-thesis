@@ -1,0 +1,5 @@
+buyer,rate_case,household_income_month_vnd,price_over_capacity
+Average household,"introductory rate of 2025, 6%",28224000.0,1.644
+Average household,"rate after the introductory period, 12%",28224000.0,2.687
+"Household of the richest fifth (national gap applied, assumption)","introductory rate of 2025, 6%",55507200.0,0.836
+"Household of the richest fifth (national gap applied, assumption)","rate after the introductory period, 12%",55507200.0,1.366

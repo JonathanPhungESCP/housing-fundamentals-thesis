@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from src.config import ROOT
 
-from src.viz.sections import cross_section, cycle_section, hcmc_section, history_section, home_section, index_section, verdict_section
+from src.viz.sections import cross_section, cycle_section, hcmc_context_section, hcmc_section, history_section, home_section, index_section, verdict_section
 
 SITE = ROOT / "site"
 MAPLIBRE = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl"
@@ -319,7 +319,7 @@ def main() -> None:
         + methodology() + FOOT)
     (SITE / "hcmc.html").write_text(
         head("Ho Chi Minh City land values", "Official administrative land values by street segment in Ho Chi Minh City, 2026.", "hcm")
-        + HCMC.replace("<h2>By ward or commune</h2>", hcmc_section() + "\n<h2>By ward or commune</h2>", 1) + FOOT)
+        + HCMC.replace("<h2>By ward or commune</h2>", hcmc_section() + hcmc_context_section() + "\n<h2>By ward or commune</h2>", 1) + FOOT)
     for key, c in CITIES.items():
         if not (SITE / "data" / f"{key}_meta.json").exists():
             (SITE / f"{key}.html").write_text(

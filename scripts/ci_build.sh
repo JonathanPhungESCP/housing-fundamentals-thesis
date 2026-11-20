@@ -57,6 +57,7 @@ step volumes          python -m src.valuation.volumes
 step value_effect     python -m src.valuation.value_effect
 step district_cycles  python -m src.valuation.district_cycles
 step hcmc_checks      python -m src.valuation.hcmc_checks
+step hcmc_context     python -m src.valuation.hcmc_context
 step tests            python -m pytest -q tests
 
 # Probes for two open questions of the data audit (results are only printed, nothing is used).

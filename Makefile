@@ -45,6 +45,7 @@ verdict:
 	$(PY) -m src.valuation.value_effect
 	$(PY) -m src.valuation.district_cycles
 	$(PY) -m src.valuation.hcmc_checks
+	$(PY) -m src.valuation.hcmc_context
 
 ## Static website data and pages (site/)
 site:
