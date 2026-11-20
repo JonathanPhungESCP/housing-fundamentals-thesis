@@ -1,0 +1,6 @@
+discount_rate_is,rate,why,g_star_gamma1,g_star_gamma4,income_growth,check1
+10-year government bond,0.0446,the convention used for Paris and Singapore,0.027,0.057,0.072,plausible
+"bank deposit, state-owned banks",0.055,what a cash buyer's savings earn at the safest banks,0.0374,0.0674,0.072,plausible
+"bank deposit, online offers",0.07,what a cash buyer's savings earn at the better offers,0.0524,0.0824,0.072,depends on the premium
+"mortgage, state-owned banks",0.1,the cost of money for a buyer who borrows,0.0824,0.1124,0.072,implausible
+"mortgage, other banks",0.12,the cost of money for a buyer who borrows,0.1024,0.1324,0.072,implausible

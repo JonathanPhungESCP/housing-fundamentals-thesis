@@ -843,6 +843,68 @@ would be more cyclical.</p>
 <p><strong>What it changes for the question asked.</strong> A city-wide ratio hides where the adjustment
 happens. In Paris the correction of 2022–2024 was not spread evenly over an "overvalued"
 city; it fell on the quartiers where buyers borrow most, while the centre barely moved.</p>
+<h2>Ho Chi Minh City: what can be tested without a sales register</h2>
+<p>Method and inputs: <code>src/valuation/hcmc_checks.py</code>, <code>hcmc_checks.csv</code>, <code>hcmc_inputs.csv</code>.
+Vietnam publishes no register of sales and no official price or rent index. The index, the
+explosiveness test, the ratio history, the volume signal and the district cross-section
+cannot be run. The two cross-checks can, from city-wide averages read on 20 November 2026.</p>
+<p><strong>Income side: beyond capacity in every case.</strong> At 60 to 75 million VND/m², a 60 m² flat
+(assumed size) costs 11 to 13 years of average household income (28.2 million VND a month)
+and 1.6 to 3.8 times what that household can borrow with 30% down at mortgage rates of 10%
+to 14%. Paris stands at 1.56. This result does not use the government yield.</p>
+<p><strong>Rent side: it depends on the discount rate.</strong> With a gross yield of 4.2%, the rent growth
+that today's prices require, against income growth of 7.2% a year (2010–2022):</p>
+<table>
+<thead>
+<tr>
+<th>Discount rate taken</th>
+<th>Rate</th>
+<th>Required rent growth (risk premium 1% to 4%)</th>
+<th>Against 7.2%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10-year government bond (convention used for Paris and Singapore)</td>
+<td>4.5%</td>
+<td>2.7% to 5.7%</td>
+<td>under in every case</td>
+</tr>
+<tr>
+<td>Deposit at a state-owned bank</td>
+<td>5.5%</td>
+<td>3.7% to 6.7%</td>
+<td>under in every case</td>
+</tr>
+<tr>
+<td>Online deposit offers</td>
+<td>7.0%</td>
+<td>5.2% to 8.2%</td>
+<td>depends on the risk premium</td>
+</tr>
+<tr>
+<td>Mortgage, state-owned banks</td>
+<td>10.0%</td>
+<td>8.2% to 11.2%</td>
+<td>above in every case</td>
+</tr>
+<tr>
+<td>Mortgage, other banks</td>
+<td>12.0%</td>
+<td>10.2% to 13.2%</td>
+<td>above in every case</td>
+</tr>
+</tbody>
+</table>
+<p>In Paris the government yield and the mortgage rate are within half a point of each other
+(3.4% and 3.0% in 2025), and in Singapore the government yield (2.3%) sits below a regulatory
+stress rate of 4%, so the choice of rate matters little there. In Vietnam the two are five
+to ten points apart. The price is defensible for a buyer who pays cash and compares with a
+deposit at a state-owned bank, and not for a buyer who borrows. At these borrowing costs the
+average household cannot be the marginal buyer.</p>
+<p>This is an order of magnitude, not a result of the same standing as Paris or Singapore:
+asking prices and averages, a yield quoted second-hand, an assumed flat size, national
+household size, and a city whose boundary changed in July 2025. No verdict is given.</p>
 <h2>What can be said firmly</h2>
 <ol>
 <li><strong>Paris: the 2000–2020 boom has largely deflated; there is no explosive dynamic today.</strong>
@@ -1537,6 +1599,13 @@ sales. For year t, the change in the quality-adjusted log price between t−1 an
 regressed on the average level in t−3 and t−2 (no shared observation), with robust standard
 errors. Groups: thirds of districts by level in 2014–2016 (Paris) and 2009–2011 (HDB),
 index 100 the following year. Choices fixed before the results.</p>
+<h2>18. Ho Chi Minh City cross-checks</h2>
+<p><code>src/valuation/hcmc_checks.py</code>. The two cross-checks of §13 computed from city-wide
+averages instead of sales: g* = r_f + τ + δ + γ − R/P against income growth, and price over
+borrowing capacity. Inputs, sources, URLs and the date read are in <code>hcmc_inputs.csv</code>;
+assumptions are flagged there. Each check is run over a range (yield ± 1 point; resale and
+new-build prices; two lending cases; mortgage rates 10%, 12%, 14%) and read with the rules
+of §13. Exploratory: outside the verdict table.</p>
 <h2>References</h2>
 <p>Checked on 2026-11-10 (authors, year, journal, volume and pages; DOI where given).</p>
 <ul>
@@ -1801,6 +1870,24 @@ standard errors.</p><h1>Limitations</h1>
 <li><strong>Few years, correlated districts.</strong> Nine yearly slopes for Paris; the t-statistics ignore
   spatial correlation. The link with credit conditions rests on two dated episodes.</li>
 <li><strong>Private homes in Singapore:</strong> no public transaction file before 2021 was found.</li>
+</ul>
+<h2>Ho Chi Minh City cross-checks (added 2026-11-20)</h2>
+<ul>
+<li><strong>No transaction data.</strong> Every figure is a published average; prices and rents are asking
+  figures from brokers' reports, most read through press coverage and not in the original.</li>
+<li><strong>Definitions disagree.</strong> Average prices for 2026 range from 60 to 112 million VND/m²
+  depending on the source (resale, new-build, newly launched projects; old or merged city).</li>
+<li><strong>Assumptions:</strong> 60 m² flat, taxes and upkeep 1.4% of value (the Paris figure), 35% or 50%
+  of income to the lender (Vietnam sets no cap in the sources read), household size 3.5
+  (national). The capacity ratio is proportional to the flat size and to the price.</li>
+<li><strong>Income:</strong> survey average per person, not a median, and possibly incomplete for informal
+  income; the 2025 figure is for the city after the merger with Bình Dương and Bà Rịa–Vũng Tàu,
+  the 2010–2022 growth for the former city.</li>
+<li><strong>Discount rate:</strong> the rent-side result holds with the government yield or a state-bank
+  deposit rate and reverses with a mortgage rate. Which rate applies depends on who buys,
+  which these data do not show. Deposit rates were read in press tables that do not agree
+  with each other (5.5% at state-owned banks, 6.1% to 7% for online offers).</li>
+<li><strong>One date.</strong> No history, so nothing can be said about dynamics or timing.</li>
 </ul></div></main>
 <footer><div class="wrap">
 Code and processed aggregates: see the project repository. Data: DGFiP / Etalab (DVF), Ville de Paris (ODbL),

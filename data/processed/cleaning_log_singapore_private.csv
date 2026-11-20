@@ -1,8 +1,8 @@
 city,step,rule,rows_before,rows_removed,rows_after
-singapore_private,1_non_landed_open_market,"propertyType in {Apartment, Condominium} (excludes Executive Condominium and landed)",132098,28314,103784
-singapore_private,2_single_unit,noOfUnits == 1,103784,22,103762
-singapore_private,3_price_area_plausible,price > 0 and 20 <= area <= 400 m2,103762,193,103569
-singapore_private,4_located,URA x/y or OneMap project geocode,103569,227,103342
-singapore_private,5_in_subzone,point inside an MP2019 subzone,103342,0,103342
-singapore_private,6_non_market_price,"price/m2 within [median/3, median*3] of planning area x year",103342,18,103324
-singapore_private,7_ppm2_p1_p99,price/m2 within p1-p99 of planning area x year,103324,2287,101037
+singapore_private,1_non_landed_open_market,"propertyType in {Apartment, Condominium} (excludes Executive Condominium and landed)",131787,28275,103512
+singapore_private,2_single_unit,noOfUnits == 1,103512,22,103490
+singapore_private,3_price_area_plausible,price > 0 and 20 <= area <= 400 m2,103490,193,103297
+singapore_private,4_located,URA x/y or OneMap project geocode,103297,228,103069
+singapore_private,5_in_subzone,point inside an MP2019 subzone,103069,0,103069
+singapore_private,6_non_market_price,"price/m2 within [median/3, median*3] of planning area x year",103069,17,103052
+singapore_private,7_ppm2_p1_p99,price/m2 within p1-p99 of planning area x year,103052,2278,100774

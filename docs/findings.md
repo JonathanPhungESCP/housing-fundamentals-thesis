@@ -312,6 +312,40 @@ would be more cyclical.
 happens. In Paris the correction of 2022–2024 was not spread evenly over an "overvalued"
 city; it fell on the quartiers where buyers borrow most, while the centre barely moved.
 
+## Ho Chi Minh City: what can be tested without a sales register
+
+Method and inputs: `src/valuation/hcmc_checks.py`, `hcmc_checks.csv`, `hcmc_inputs.csv`.
+Vietnam publishes no register of sales and no official price or rent index. The index, the
+explosiveness test, the ratio history, the volume signal and the district cross-section
+cannot be run. The two cross-checks can, from city-wide averages read on 20 November 2026.
+
+**Income side: beyond capacity in every case.** At 60 to 75 million VND/m², a 60 m² flat
+(assumed size) costs 11 to 13 years of average household income (28.2 million VND a month)
+and 1.6 to 3.8 times what that household can borrow with 30% down at mortgage rates of 10%
+to 14%. Paris stands at 1.56. This result does not use the government yield.
+
+**Rent side: it depends on the discount rate.** With a gross yield of 4.2%, the rent growth
+that today's prices require, against income growth of 7.2% a year (2010–2022):
+
+| Discount rate taken | Rate | Required rent growth (risk premium 1% to 4%) | Against 7.2% |
+|---|---|---|---|
+| 10-year government bond (convention used for Paris and Singapore) | 4.5% | 2.7% to 5.7% | under in every case |
+| Deposit at a state-owned bank | 5.5% | 3.7% to 6.7% | under in every case |
+| Online deposit offers | 7.0% | 5.2% to 8.2% | depends on the risk premium |
+| Mortgage, state-owned banks | 10.0% | 8.2% to 11.2% | above in every case |
+| Mortgage, other banks | 12.0% | 10.2% to 13.2% | above in every case |
+
+In Paris the government yield and the mortgage rate are within half a point of each other
+(3.4% and 3.0% in 2025), and in Singapore the government yield (2.3%) sits below a regulatory
+stress rate of 4%, so the choice of rate matters little there. In Vietnam the two are five
+to ten points apart. The price is defensible for a buyer who pays cash and compares with a
+deposit at a state-owned bank, and not for a buyer who borrows. At these borrowing costs the
+average household cannot be the marginal buyer.
+
+This is an order of magnitude, not a result of the same standing as Paris or Singapore:
+asking prices and averages, a yield quoted second-hand, an assumed flat size, national
+household size, and a city whose boundary changed in July 2025. No verdict is given.
+
 ## What can be said firmly
 
 1. **Paris: the 2000–2020 boom has largely deflated; there is no explosive dynamic today.**

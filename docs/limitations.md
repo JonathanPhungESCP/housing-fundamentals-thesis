@@ -229,3 +229,20 @@ These are stated plainly because they bound what the results can say.
 - **Few years, correlated districts.** Nine yearly slopes for Paris; the t-statistics ignore
   spatial correlation. The link with credit conditions rests on two dated episodes.
 - **Private homes in Singapore:** no public transaction file before 2021 was found.
+
+## Ho Chi Minh City cross-checks (added 2026-11-20)
+- **No transaction data.** Every figure is a published average; prices and rents are asking
+  figures from brokers' reports, most read through press coverage and not in the original.
+- **Definitions disagree.** Average prices for 2026 range from 60 to 112 million VND/m²
+  depending on the source (resale, new-build, newly launched projects; old or merged city).
+- **Assumptions:** 60 m² flat, taxes and upkeep 1.4% of value (the Paris figure), 35% or 50%
+  of income to the lender (Vietnam sets no cap in the sources read), household size 3.5
+  (national). The capacity ratio is proportional to the flat size and to the price.
+- **Income:** survey average per person, not a median, and possibly incomplete for informal
+  income; the 2025 figure is for the city after the merger with Bình Dương and Bà Rịa–Vũng Tàu,
+  the 2010–2022 growth for the former city.
+- **Discount rate:** the rent-side result holds with the government yield or a state-bank
+  deposit rate and reverses with a mortgage rate. Which rate applies depends on who buys,
+  which these data do not show. Deposit rates were read in press tables that do not agree
+  with each other (5.5% at state-owned banks, 6.1% to 7% for online offers).
+- **One date.** No history, so nothing can be said about dynamics or timing.

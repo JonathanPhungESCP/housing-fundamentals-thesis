@@ -418,6 +418,15 @@ regressed on the average level in t−3 and t−2 (no shared observation), with 
 errors. Groups: thirds of districts by level in 2014–2016 (Paris) and 2009–2011 (HDB),
 index 100 the following year. Choices fixed before the results.
 
+## 18. Ho Chi Minh City cross-checks
+
+`src/valuation/hcmc_checks.py`. The two cross-checks of §13 computed from city-wide
+averages instead of sales: g* = r_f + τ + δ + γ − R/P against income growth, and price over
+borrowing capacity. Inputs, sources, URLs and the date read are in `hcmc_inputs.csv`;
+assumptions are flagged there. Each check is run over a range (yield ± 1 point; resale and
+new-build prices; two lending cases; mortgage rates 10%, 12%, 14%) and read with the rules
+of §13. Exploratory: outside the verdict table.
+
 ## References
 
 Checked on 2026-11-10 (authors, year, journal, volume and pages; DOI where given).
