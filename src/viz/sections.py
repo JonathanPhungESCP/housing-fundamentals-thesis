@@ -634,3 +634,126 @@ def hcmc_context_section() -> str:
   <p class="note">Most figures are read in press coverage of brokers' and official reports, not in the reports themselves. Sales
   and unsold stock are national. Survey shares come from a property portal. The household count without a home dates from 2019.</p>
 </div>"""
+
+
+def _line_chart(periods: list[str], series: list[dict], title: str, H: int = 300, ref: float | None = None, every: int = 20) -> str:
+    """Generic quarterly line chart with the shared hover read-out. series: label, color, values (None allowed)."""
+    N, W, m = len(periods), 920, {"l": 52, "r": 16, "t": 16, "b": 26}
+    X = lambda i: m["l"] + (i + 0.5) * (W - m["l"] - m["r"]) / N  # noqa: E731
+    allv = [v for s in series for v in s["values"] if v is not None]
+    ticks = _ticks(min(allv), max(allv))
+    step = ticks[1] - ticks[0]
+    lo, hi = math.floor(min(allv) / step) * step, math.ceil(max(allv) / step) * step
+    Y = lambda v: H - m["b"] - (v - lo) / (hi - lo) * (H - m["t"] - m["b"])  # noqa: E731
+    e = [f'<line x1="{m["l"]}" x2="{W - m["r"]}" y1="{Y(lo + k * step):.1f}" y2="{Y(lo + k * step):.1f}" stroke="var(--grid)"/>'
+         f'<text x="{m["l"] - 8}" y="{Y(lo + k * step) + 4:.1f}" text-anchor="end">{lo + k * step:g}</text>' for k in range(int(round((hi - lo) / step)) + 1)]
+    e += [f'<text x="{X(i):.1f}" y="{H - 8}" text-anchor="middle">{p[:4]}</text>' for i, p in enumerate(periods) if p.endswith("Q1") and int(p[:4]) % (every // 4) == 0]
+    if ref is not None and lo <= ref <= hi:
+        e.append(f'<line x1="{m["l"]}" x2="{W - m["r"]}" y1="{Y(ref):.1f}" y2="{Y(ref):.1f}" stroke="var(--muted)" stroke-dasharray="2 3"/>')
+    for s in series:
+        pts = [(i, v) for i, v in enumerate(s["values"]) if v is not None]
+        e.append(f'<path d="{" ".join(f"{chr(77) if j == 0 else chr(76)}{X(i):.1f},{Y(v):.1f}" for j, (i, v) in enumerate(pts))}" fill="none" '
+                 f'stroke="{s["color"]}" stroke-width="{s.get("width", 2)}" stroke-linejoin="round"/>')
+    e.append(f'<line class="xh" y1="{m["t"]}" y2="{H - m["b"]}" stroke="var(--muted)" visibility="hidden"/>'
+             f'<rect class="hit" x="{m["l"]}" y="0" width="{W - m["l"] - m["r"]}" height="{H}" fill="transparent"/>')
+    data = {"W": W, "l": m["l"], "r": m["r"], "periods": [p.replace("Q", " Q") for p in periods],
+            "series": [{"label": s["label"], "color": s["color"], "values": s["values"]} for s in series]}
+    legend = "".join(f'<span class="cls"><span class="sw" style="background:{s["color"]};height:3px;vertical-align:middle"></span> {s["label"]}</span>' for s in series)
+    return (f'<div class="legend">{legend}</div><div class="schart"><svg class="chart" viewBox="0 0 {W} {H}" role="img" aria-label="{title}">{"".join(e)}</svg>'
+            f'<script type="application/json">{json.dumps(data)}</script></div>')
+
+
+DYN_TERMS = [("real_rates", "Expected real interest rates", "var(--series-market)"), ("rent_growth", "Expected rent growth", "var(--series-strat)"),
+             ("premium", "The rest (premium, credit, model error)", "var(--series-official)")]
+DYN_RATE = {"paris": "10-year government yield", "singapore_private": "10-year government yield", "hongkong": "banks' best lending rate",
+            "hongkong_interbank": "interbank rate"}
+
+
+def dynamic_section(market: str) -> str:
+    """Dynamic present-value decomposition of the price-to-rent ratio for one market."""
+    fs, fp, fe = (PROCESSED / f"dynamic_pv_{k}.csv" for k in ("summary", "paths", "episodes"))
+    if not (fs.exists() and fp.exists() and fe.exists()):
+        return ""
+    s = pd.read_csv(fs).set_index("market")
+    if market not in s.index:
+        return ""
+    s, p, ep = s.loc[market], pd.read_csv(fp), pd.read_csv(fe)
+    p, ep = p[p["market"] == market], ep[ep["market"] == market]
+    periods = p["period"].tolist()
+    series = [{"label": "Price-to-rent ratio (log, deviation from its average, × 100)", "color": "var(--text-primary)", "width": 2.5,
+               "values": [round(100 * v, 1) for v in p["log_price_to_rent"]]}]
+    series += [{"label": lab, "color": c, "values": [round(100 * v, 1) for v in p[k]]} for k, lab, c in DYN_TERMS]
+    pct = lambda v: f"{100 * v:.0f}%"  # noqa: E731
+    rows = "".join(
+        f"<tr><td>{lab}</td><td class='num'>{pct(s[f'share_{k}'])}</td><td class='num'>{pct(s[f'share_{k}_low'])} to {pct(s[f'share_{k}_high'])}</td>"
+        f"<td class='num'>{pct(s[f'annual_share_{k}'])}</td></tr>" for k, lab, _ in DYN_TERMS)
+    erows = "".join(
+        f"<tr><td>{r['from'].replace('Q', ' Q')} → {r['to'].replace('Q', ' Q')}</td><td class='num'>{r.change_price_to_rent_pct:+.0f}%</td>"
+        f"<td class='num'>{r.log_price_to_rent_log_points:+.0f}</td><td class='num'>{r.real_rates_log_points:+.0f}</td>"
+        f"<td class='num'>{r.rent_growth_log_points:+.0f}</td><td class='num'>{r.premium_log_points:+.0f}</td></tr>" for _, r in ep.iterrows())
+    above = s["share_premium"] > s["premium_share_if_no_premium_p95"]
+    return f"""
+<h2>What moved the price-to-rent ratio</h2>
+<div class="card">
+  <p>The user-cost formula takes today's interest rate as if it held for ever. This decomposition (Campbell and Shiller 1988;
+  Campbell, Davis, Gallin and Martin 2009) lets rates and rents vary: the ratio can rise only if real interest rates are
+  expected to be lower, if rents are expected to grow faster, or for another reason, which is whatever the first two leave
+  unexplained. Sample: {s["first"].replace("Q", " Q")} to {s["last"].replace("Q", " Q")}; interest rate: {DYN_RATE.get(market, "")}, minus inflation.</p>
+  {_line_chart(periods, series, "Decomposition of the price-to-rent ratio", H=320, ref=0)}
+  <div class="table-scroll"><table><thead><tr><th>Change in the ratio between</th><th class="num">Price-to-rent ratio</th><th class="num">In log points</th>
+  <th class="num">from real rates</th><th class="num">from rent growth</th><th class="num">from the rest</th></tr></thead><tbody>{erows}</tbody></table></div>
+  <div class="table-scroll"><table><thead><tr><th>Share of the ratio's variations carried by</th><th class="num">Estimate</th>
+  <th class="num">90% bootstrap interval</th><th class="num">Annual data</th></tr></thead><tbody>{rows}</tbody></table></div>
+  <p class="note"><b>How much to trust it.</b> The intervals are wide. A forecasting model estimated on a few decades understates
+  how persistent rates and rents are, and what it then fails to explain lands in "the rest": on simulated samples of this length
+  in which there is no premium at all, the method attributes {pct(s["premium_share_if_no_premium_p50"])} of the variations to it at
+  the median, and up to {pct(s["premium_share_if_no_premium_p95"])} in one case out of twenty. The {pct(s["share_premium"])} found
+  here is {"above" if above else "within"} that range{"" if above else ", so it cannot be told apart from a market with no premium at work"}.
+  "The rest" is a residual: it also contains credit conditions, taxes and the model's errors.</p>
+</div>"""
+
+
+def hongkong_sections() -> str:
+    f = PROCESSED / "hk_series.csv"
+    if not f.exists():
+        return ""
+    from src.valuation.early_warning import drawdowns
+    h = pd.read_csv(f, dtype={"period": str})
+    h = h[h["rent_index"].notna()]
+    periods = h["period"].tolist()
+    num = lambda c: [None if pd.isna(v) else round(float(v), 1) for v in h[c]]  # noqa: E731
+    idx = _line_chart(periods, [{"label": "Price index, private flats (1999 = 100)", "color": "var(--series-market)", "values": num("price_index")},
+                                {"label": "Rental index (1999 = 100)", "color": "var(--series-strat)", "values": num("rent_index")}], "Price and rental indices")
+    yld = _line_chart(periods, [{"label": "Gross rental yield, flats under 100 m² (%)", "color": "var(--series-official)", "values": num("yield_pct")},
+                                {"label": "Banks' best lending rate (%)", "color": "var(--series-market)", "values": num("best_lending_rate_pct")},
+                                {"label": "Interbank rate (%)", "color": "var(--series-strat)", "values": num("interbank_pct")}], "Yield and interest rates", H=260)
+    s = pd.Series(h["price_index"].to_numpy(dtype=float), index=pd.PeriodIndex(h["period"], freq="Q"))
+    rows = "".join(f"<tr><td>{str(b['peak']).replace('Q', ' Q')}</td><td>{str(b['trough']).replace('Q', ' Q')}</td><td class='num'>{100 * b['drop']:.0f}%</td>"
+                   f"<td>{str(b['recovered']).replace('Q', ' Q') if b['recovered'] is not None else 'not yet'}</td></tr>" for b in drawdowns(s, 0.10))
+    last = h.iloc[-1]
+    return f"""
+<p class="lede">Hong Kong publishes official price and rental indices of private flats from the same source since 1979, which
+makes it the longest consistent record among the cities studied here, with two large falls. There is no open register of
+sales, so the tests that need individual transactions are not run.</p>
+<h2>Prices and rents since 1980</h2>
+<div class="card">
+  {idx}
+  <p class="meta-line">Rating and Valuation Department, territory-wide indices, average of classes A, B and C (flats under 100 m²).
+  Latest quarter: {last["period"].replace("Q", " Q")}, price index {last["price_index"]:.0f}, rental index {last["rent_index"]:.0f}. Not adjusted for inflation.</p>
+  <div class="table-scroll"><table><thead><tr><th>Price peak</th><th>Trough</th><th class="num">Fall of the price index</th><th>Peak regained</th></tr></thead>
+  <tbody>{rows}</tbody></table></div>
+  <p class="meta-line">Falls of at least 10% in the index, found by the same rule as for the other cities.</p>
+</div>
+<h2>Rental yield and interest rates</h2>
+<div class="card">{yld}
+  <p class="meta-line">Yields: Rating and Valuation Department, from 1990. Best lending rate: Hong Kong Monetary Authority. Interbank rate: IMF
+  International Financial Statistics. Since about 2000 new mortgages are priced well below the best lending rate.</p>
+</div>
+{dynamic_section("hongkong")}
+<div class="card"><p><b>Check with the interbank rate</b> (added after the first results, because the best lending rate has barely
+moved since 2000 while borrowing costs have): the share of "the rest" is
+{100 * pd.read_csv(PROCESSED / "dynamic_pv_summary.csv").set_index("market").loc["hongkong_interbank", "share_premium"]:.0f}% on 1990–2025, and real rates
+again explain little.</p></div>
+<div class="note">Sources: Rating and Valuation Department, Property Market Statistics (data.gov.hk); Hong Kong Monetary Authority open API; IMF
+International Financial Statistics through DBnomics (consumer prices to 2025 Q1, which ends the sample of the decomposition). Indices only:
+no district detail, no incomes, and no verdict is given for this city.</div>"""

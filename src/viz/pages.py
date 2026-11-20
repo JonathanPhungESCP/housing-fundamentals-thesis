@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from src.config import ROOT
 
-from src.viz.sections import cross_section, cycle_section, hcmc_context_section, hcmc_section, history_section, home_section, index_section, verdict_section
+from src.viz.sections import cross_section, cycle_section, dynamic_section, hcmc_context_section, hongkong_sections, hcmc_section, history_section, home_section, index_section, verdict_section
 
 SITE = ROOT / "site"
 MAPLIBRE = "https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl"
@@ -31,6 +31,7 @@ HEAD = """<!doctype html>
     <a href="paris.html"{a_paris}>Paris</a>
     <a href="singapore.html"{a_sg}>Singapore (HDB)</a>
     <a href="singapore_private.html"{a_sgp}>Singapore (private)</a>
+    <a href="hongkong.html"{a_hk}>Hong Kong</a>
     <a href="hcmc.html"{a_hcm}>Ho Chi Minh City</a>
     <a href="methodology.html"{a_meth}>Method &amp; limits</a>
   </nav>
@@ -51,10 +52,10 @@ under ODbL. Nothing here is investment advice.
 
 
 def head(title, desc, page, extra="", body_attr=""):
-    cur = {k: "" for k in ("home", "paris", "sg", "sgp", "hcm", "meth")}
+    cur = {k: "" for k in ("home", "paris", "sg", "sgp", "hk", "hcm", "meth")}
     cur[page] = ' aria-current="page"'
     return HEAD.format(title=title, desc=desc, extra=extra, body_attr=body_attr,
-                       a_home=cur["home"], a_paris=cur["paris"], a_sg=cur["sg"], a_sgp=cur["sgp"], a_hcm=cur["hcm"], a_meth=cur["meth"])
+                       a_home=cur["home"], a_paris=cur["paris"], a_sg=cur["sg"], a_sgp=cur["sgp"], a_hk=cur["hk"], a_hcm=cur["hcm"], a_meth=cur["meth"])
 
 
 INDEX = """
@@ -169,6 +170,7 @@ CITY = """
 {cross_section}
 {history_section}
 {cycle_section}
+{dynamic_section}
 {index_section}
 
 <h2>Fundamental vs market value per m²</h2>
@@ -317,6 +319,10 @@ def main() -> None:
     (SITE / "methodology.html").write_text(
         head("Method and limits", "How prices, rents and fundamental values are computed, and what limits them.", "meth")
         + methodology() + FOOT)
+    (SITE / "hongkong.html").write_text(
+        head("Hong Kong", "Official price and rental indices of private flats in Hong Kong since 1980, and what moved the price-to-rent ratio.", "hk")
+        + '<h1>Hong Kong <span style="font-weight:400;color:var(--text-secondary)">(long history, indices only)</span></h1>'
+        + hongkong_sections() + '<script src="assets/sections.js"></script>' + FOOT)
     (SITE / "hcmc.html").write_text(
         head("Ho Chi Minh City land values", "Official administrative land values by street segment in Ho Chi Minh City, 2026.", "hcm")
         + HCMC.replace("<h2>By ward or commune</h2>", hcmc_section() + hcmc_context_section() + "\n<h2>By ward or commune</h2>", 1) + FOOT)
@@ -335,7 +341,7 @@ def main() -> None:
                                verdict_section=verdict_section(key),
                                cross_section=cross_section(key),
                                history_section=history_section(key),
-                               cycle_section=cycle_section(key), **c) + FOOT)
+                               cycle_section=cycle_section(key), dynamic_section=dynamic_section(key), **c) + FOOT)
 
 
 if __name__ == "__main__":

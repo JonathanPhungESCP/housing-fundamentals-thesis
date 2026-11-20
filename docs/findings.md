@@ -370,6 +370,47 @@ This is an order of magnitude, not a result of the same standing as Paris or Sin
 asking prices and averages, a yield quoted second-hand, an assumed flat size, national
 household size, and a city whose boundary changed in July 2025. No verdict is given.
 
+## What moved the price-to-rent ratio: rates, rents, or the rest
+
+Method: `docs/methodology.md` §19; figures: `dynamic_pv_summary.csv`, `dynamic_pv_episodes.csv`,
+`dynamic_pv_paths.csv`. The user-cost formula treats today's interest rate as permanent.
+The dynamic present-value relation lets rates and rents vary: the ratio can rise only if
+real rates are expected to be lower, if rents are expected to grow faster, or for another
+reason, measured as what the first two leave unexplained. Hong Kong was added for this test
+because its official price and rental indices go back to 1979.
+
+| Market, sample | Share of the ratio's variations: real rates | rent growth | the rest | The rest, if there were no premium (median; 95th percentile) |
+|---|---|---|---|---|
+| Paris, 1992–2025 | 66% [−13; 192] | −14% [−81; 26] | 48% [−30; 96] | 23%; 61% |
+| Singapore private, 2004–2025 | 27% [3; 43] | 34% [−61; 129] | 39% [−47; 137] | 9%; 46% |
+| Hong Kong, 1981–2025 (best lending rate) | −24% [−69; 36] | 21% [−60; 112] | 104% [−38; 206] | 31%; 101% |
+| Hong Kong, 1990–2025 (interbank rate, added after the first results) | −6% [−37; 35] | 14% [−36; 66] | 93% [12; 161] | 36%; 111% |
+
+Brackets: 90% bootstrap intervals. Last column: what the same procedure reports on simulated
+samples of the same length in which no premium exists.
+
+| Episode | Price-to-rent ratio | from real rates | from rent growth | from the rest |
+|---|---|---|---|---|
+| Paris, 1998 Q1 → 2020 Q3 | +244% (+123 log points) | +75 | −15 | +63 |
+| Paris, 2020 Q3 → 2025 Q2 | −19% (−21) | −22 | +6 | −5 |
+| Hong Kong, 1984 Q3 → 2021 Q2 | +392% (+159) | −33 | +35 | +158 |
+| Hong Kong, 2021 Q2 → 2025 Q1 | −33% (−40) | +10 | −10 | −40 |
+| Singapore private, 2009 Q1 → 2021 Q1 | +46% (+38) | +13 | +16 | +10 |
+| Singapore private, 2021 Q1 → 2025 Q2 | −11% (−12) | −5 | +4 | −11 |
+
+- **Paris:** about 60% of the rise of the ratio between 1998 and 2020 is attributed to lower
+  expected real rates, and the whole of its fall since 2020 to their rise. It is the market
+  where interest rates explain the most, which agrees with the district result (the
+  correction of 2022–2024 fell where buyers borrow most).
+- **Hong Kong:** real rates explain nothing of the fivefold rise of the ratio since 1984,
+  with either measure of the interest rate; almost all of it is in "the rest", and so is the
+  fall since 2021.
+- **None of this is precise.** Every interval is wide, and in no market is the share of
+  "the rest" above what the method reports when there is no premium at all. A forecasting
+  model fitted on a few decades understates the persistence of rates and rents, and the
+  shortfall is booked as premium. The decomposition is evidence about direction (Paris moved
+  with rates, Hong Kong did not), not a measurement of a risk premium.
+
 ## What can be said firmly
 
 1. **Paris: the 2000–2020 boom has largely deflated; there is no explosive dynamic today.**

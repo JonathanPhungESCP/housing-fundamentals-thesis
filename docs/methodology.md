@@ -427,6 +427,33 @@ assumptions are flagged there. Each check is run over a range (yield ± 1 point;
 new-build prices; two lending cases; mortgage rates 10%, 12%, 14%) and read with the rules
 of §13. Exploratory: outside the verdict table.
 
+## 19. Dynamic present value of rents
+
+`src/ingest/hongkong.py`, `src/valuation/dynamic_pv.py`. Log-linear present-value relation
+of Campbell and Shiller (1988), applied to housing as in Campbell, Davis, Gallin and Martin
+(2009): with rp the log rent-to-price ratio, dr the real growth of rents and i the real
+interest rate per quarter, and ρ = 1/(1 + exp(mean rp)),
+
+    rp_t = constant + Σ ρ^j E_t[i_{t+1+j}] + Σ ρ^j E_t[premium_{t+1+j}] − Σ ρ^j E_t[dr_{t+1+j}].
+
+Expectations are the forecasts of a quarterly VAR(1) on (rp, dr, i); the premium term is the
+residual. Reported: each term's share of the variance of rp, a residual-bootstrap 90%
+interval, the same shares on annual data, and each term's contribution to the change of the
+log price-to-rent ratio from its lowest to its highest point and from there to the last
+quarter. A benchmark is added: samples of the same length are simulated from the estimated
+dynamics of rents and rates with the ratio set to the exact present value of their forecasts
+(no premium), and the share the procedure attributes to the premium in that case is reported.
+
+Data. Level of the ratio: the indices give its path, a yield gives its level (Paris and
+Singapore private: median gross yield of this project's sales; Hong Kong: official market
+yields, classes A to C). Paris: Notaires-INSEE price index and the national rent index,
+10-year government yield (ECB), consumer prices (IMF IFS). Singapore private: URA price and
+rental indices, 10-year yield, consumer prices. Hong Kong: Rating and Valuation Department
+price and rental indices (classes A to C, from 1979 Q4), the banks' best lending rate
+(HKMA), consumer prices (IMF IFS, to 2025 Q1). Real rate: nominal rate minus inflation over
+the previous four quarters. These choices were fixed before the results; the Hong Kong run
+with the interbank rate was added afterwards and is labelled as such.
+
 ## References
 
 Checked on 2026-11-10 (authors, year, journal, volume and pages; DOI where given).
@@ -435,6 +462,8 @@ Checked on 2026-11-10 (authors, year, journal, volume and pages; DOI where given
 - Campbell, J. Y., Shiller, R. J. (1988). The dividend-price ratio and expectations of future dividends and discount factors. *Review of Financial Studies* 1(3), 195–228. doi:10.1093/rfs/1.3.195
 - Case, K. E., Shiller, R. J. (1989). The efficiency of the market for single-family homes. *American Economic Review* 79(1), 125–137. (No DOI found; NBER Working Paper 2506.)
 - Eurostat, ILO, IMF, OECD, UNECE, World Bank (2013). *Handbook on Residential Property Prices Indices (RPPIs)*. Luxembourg: Publications Office of the European Union. ISBN 978-92-79-25984-5. doi:10.2785/34007
+- Campbell, J. Y., & Shiller, R. J. (1988). The dividend-price ratio and expectations of future dividends and discount factors. *Review of Financial Studies* 1(3), 195–228. doi:10.1093/rfs/1.3.195 (checked 2026-11-20)
+- Campbell, S. D., Davis, M. A., Gallin, J., & Martin, R. F. (2009). What moves housing markets: A variance decomposition of the rent–price ratio. *Journal of Urban Economics* 66(2), 90–102. (Journal, volume and pages checked 2026-11-20; DOI not confirmed.)
 - Gallin, J. (2008). The long-run relationship between house prices and rents. *Real Estate Economics* 36(4), 635–658. doi:10.1111/j.1540-6229.2008.00225.x
 - Genesove, D., Mayer, C. (2001). Loss aversion and seller behavior: evidence from the housing market. *Quarterly Journal of Economics* 116(4), 1233–1260. (DOI not confirmed.)
 - Glaeser, E. L., Gottlieb, J. D., Gyourko, J. (2013). Can cheap credit explain the housing boom? In E. L. Glaeser and T. Sinai (eds.), *Housing and the Financial Crisis*, University of Chicago Press, 301–359. (Book chapter; NBER Working Paper 16230.)

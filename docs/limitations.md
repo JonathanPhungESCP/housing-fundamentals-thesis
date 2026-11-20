@@ -251,3 +251,23 @@ These are stated plainly because they bound what the results can say.
   are national; survey shares come from a property portal; the income gap of the richest
   fifth is national and applied to the city; the exchange rate is rounded. The link between
   credit conditions and prices is a reading of the sequence of events, not a test.
+
+## Dynamic present value and Hong Kong (added 2026-11-20)
+- **The premium is a residual**, not a measurement: it holds credit conditions, taxes, supply
+  and every error of the forecasting model along with any risk premium.
+- **Small-sample bias.** With 85 to 174 quarters and near-unit-root series, the VAR understates
+  persistence; on simulated samples with no premium the method still attributes 9% to 36% of
+  the variations to it at the median and up to 46% to 111% in one case out of twenty. In no
+  market does the estimated share exceed that range.
+- **Expectations are the model's**, not buyers'; a VAR(1) cannot represent a change of regime
+  such as the euro or the end of high inflation.
+- **Rents:** national index for Paris (not the city, and smoothed by regulation); for all
+  markets, indices of leases in force move more slowly than market rents.
+- **Interest rates:** real rates use past inflation, not expected inflation. For Hong Kong the
+  best lending rate has not tracked mortgage costs since about 2000; the interbank check was
+  added after seeing the first results.
+- **Level of the ratio** rests on yields measured over a few recent years (Paris, Singapore).
+- **Hong Kong:** indices only, flats under 100 m², territory-wide; consumer prices end in
+  2025 Q1; no incomes, no transactions, no verdict. The terms of use of data.gov.hk were not
+  read in full (the dataset record carries no licence field).
+- **Singapore private:** 85 quarters, too short for much weight.
