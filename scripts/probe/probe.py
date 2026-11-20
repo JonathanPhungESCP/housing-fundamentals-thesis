@@ -72,41 +72,52 @@ def listing(fid: str) -> list[tuple[str, str, object]]:
 
 import csv
 import io
-import zipfile
 
-url = "https://cerema.app.box.com/index.php?rm=box_download_shared_file&vanity_name=dvfplus-opendata&file_id=f_2192472020739"
-with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=600) as r:
-    blob = r.read()
-out.append(f"=== zip {len(blob)} bytes")
-z = zipfile.ZipFile(io.BytesIO(blob))
-for info in z.infolist():
-    out.append(f"{info.filename} | {info.file_size}")
-for info in z.infolist():
-    if not info.filename.lower().endswith(".csv") or not re.search(r"75|mutation", info.filename, re.I):
-        continue
-    with z.open(info) as f:
-        head = f.readline().decode("utf-8", "ignore").strip()
-        sep = max(";|,\t", key=head.count)
-        cols = head.split(sep)
-        out.append(f"--- {info.filename}: sep {sep!r}, {len(cols)} columns: {cols}")
-        rd = csv.reader(io.TextIOWrapper(f, "utf-8", errors="ignore"), delimiter=sep)
-        want = [c for c in cols if c in ("datemut", "anneemut", "coddep", "libnatmut", "vefa", "valeurfonc", "nblocmut", "nblocapt", "nblocdep",
-                                         "nbapt1pp", "nbapt2pp", "nbapt3pp", "nbapt4pp", "nbapt5pp", "sbati", "sbatapt", "codtypbien", "libtypbien", "l_codinsee", "l_section")]
-        idx = [cols.index(c) for c in want]
-        n, years, types, shown = 0, {}, {}, 0
-        for row in rd:
-            if len(row) != len(cols):
-                continue
-            rec = dict(zip(want, (row[i] for i in idx)))
-            if rec.get("coddep") != "75":
-                continue
-            n += 1
-            years[rec.get("anneemut")] = years.get(rec.get("anneemut"), 0) + 1
-            types[rec.get("libtypbien")] = types.get(rec.get("libtypbien"), 0) + 1
-            if shown < 3 and rec.get("libtypbien", "").upper().startswith("UN APPARTEMENT"):
-                out.append("  sample: " + json.dumps(rec, ensure_ascii=False))
-                shown += 1
-        out.append(f"  Paris rows {n}; by year {dict(sorted(years.items()))}")
-        out.append("  types: " + json.dumps(dict(sorted(types.items(), key=lambda kv: -kv[1])[:12]), ensure_ascii=False))
+out.append("=== data.gov.hk: RVD property market statistics")
+try:
+    pkg = json.loads(get("https://data.gov.hk/en-data/api/3/action/package_show?id=hk-rvd-tsinfo_rvd-property-market-statistics"))["result"]
+    out.append("licence/terms fields: " + json.dumps({k: pkg.get(k) for k in ("license_id", "license_title", "license_url")}))
+    res = pkg.get("resources", [])
+    out.append(f"{len(res)} resources")
+    want = [r for r in res if re.search(r"Private Domestic - (Price|Rental) Indices by Class \(Territory-wide\)|Market Yields|Average (Prices|Rents) by Class", r.get("name", ""))]
+    for r in want:
+        out.append(f"{r.get('name')} | {r.get('format')} | {r.get('url')}")
+    seen = set()
+    for r in want:
+        u = r.get("url", "")
+        if not u.lower().endswith(".csv") or u in seen or len(seen) >= 6:
+            continue
+        seen.add(u)
+        try:
+            txt = get(u)
+            lines = txt.splitlines()
+            out.append(f"--- {u}: {len(lines)} lines")
+            out += ["   " + ln[:260] for ln in lines[:7] + lines[-3:]]
+        except Exception as e:
+            out.append(f"--- {u} ERROR {e!r}")
+except Exception as e:
+    out.append(f"ERROR {e!r}")
+
+out.append("=== DBnomics: IMF IFS, Hong Kong and France")
+for sid in ("IMF/IFS/Q.HK.PCPI_IX", "IMF/IFS/Q.HK.FILR_PA", "IMF/IFS/Q.HK.FIMM_PA", "IMF/IFS/Q.HK.FIGB_PA", "IMF/IFS/Q.HK.FIDR_PA",
+            "IMF/IFS/M.HK.PCPI_IX", "IMF/IFS/Q.FR.PCPI_IX", "IMF/IFS/Q.FR.FIGB_PA"):
+    try:
+        d = json.loads(get(f"https://api.db.nomics.world/v22/series/{sid}?observations=1"))["series"]["docs"][0]
+        obs = [(p, v) for p, v in zip(d["period"], d["value"]) if v not in (None, "NA")]
+        out.append(f"{sid} | {d.get('series_name')} | {len(obs)} obs | {obs[0]} .. {obs[-1]}")
+    except Exception as e:
+        out.append(f"{sid} ERROR {e!r}")
+
+out.append("=== HKMA API")
+for u in ("https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/hk-interbank-ir-endperiod?pagesize=1000&sortby=end_of_month&sortorder=asc",
+          "https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/hkd-ir-effdates?pagesize=1000",
+          "https://api.hkma.gov.hk/public/market-data-and-statistics/monthly-statistical-bulletin/er-ir/hk-deposit-ir-endperiod?pagesize=1000&sortorder=asc"):
+    try:
+        d = json.loads(get(u))["result"]
+        recs = d.get("records", [])
+        out.append(f"{u.split('/')[-1].split('?')[0]} | {d.get('datasize')} records | keys {list(recs[0])[:14] if recs else None}")
+        out += ["   " + json.dumps(r)[:300] for r in recs[:1] + recs[-1:]]
+    except Exception as e:
+        out.append(f"{u} ERROR {e!r}")
 open(sys.argv[1], "w").write("\n".join(out) + "\n")
-print("\n".join(out)[:4000])
+print("\n".join(out)[:5000])
